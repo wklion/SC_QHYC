@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.grid.mapper.ForecastfineMapper"> 
+    <!-- 这里的id必须和UserMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+    <select id="getUserStation" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.*,c.AreaName,c.AreaCode as CityAreaCode from t_stationforecast a left join t_area b on b.AreaCode = a.AreaCode
+		left join t_area c on c.AreaID = b.ParentID 
+		where a.AreaCode like #{departCode} and a.type = #{type} order by a.AreaCode,a.id
+		]]>
+    </select>
+    
+    <select id="getUserStationNew" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.*,c.AreaName from t_stationforecast a 
+    	left join t_area b on b.AreaCode = a.AreaCode
+		left join t_area c on c.AreaID = b.ParentID 
+ 		where locate(CONCAT(',',a.StationNum,','),CONCAT(',',(select stationNums from t_forecastfineinfo where id = #{id}),','))>0 
+ 		and a.type = #{type} and a.AreaCode like #{departCode}
+ 		order by a.HYJXHType,a.AreaCode,a.id
+		]]>
+    </select>
+    
+    <select id="getZDYBPublishTime" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.name as productName,a.stationType,a.showTable,b.* from t_forecastfine a left join t_forecastfineinfo b on a.id = b.`type` 
+    	where b.depart like #{depart} and b.areaCodes like #{areaCode} order by b.id 
+		]]>
+    </select>
+    
+    <select id="getZDYBSet" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select * from t_forecastfineInfo  where depart like #{depart} and type = #{type}
+		]]>
+    </select>
+    
+    <select id="getZDYBType" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select * from t_forecastfine
+		]]>
+    </select>
+    
+    <select id="updateZDYBSet" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	update t_forecastfineinfo set publishTime = #{publishTime},gdybPublishTime = #{gdybPublishTime},makeTime = #{makeTime},forecastTime = #{forecastTime},gdybType = #{gdybType},endTime = #{endTime}
+    	 ,stationNums = #{stationNums},depart = #{depart},areaCodes = #{areaCodes},outType = #{outType},hourSpan = #{hourSpan},
+    	 hourSpanTotal = #{hourSpanTotal}
+    	 ,ui = #{ui} where id = #{id}
+		]]>
+    </select>
+    
+    <select id="insertZDYBSet" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	insert into t_forecastfineinfo (publishTime,gdybPublishTime,makeTime,forecastTime,gdybType,endTime,stationNums,name,depart,areaCodes,type,outType,context,hourSpan,hourSpanTotal,zdybHour,ui)
+    	 values (#{publishTime}, #{gdybPublishTime}, #{makeTime}, #{forecastTime},#{gdybType}, #{endTime}, #{stationNums}, #{name}, #{depart},#{areaCodes}, #{type}, #{outType}, #{context}, #{hourSpan}, #{hourSpanTotal}, #{zdybHour}, #{ui})
+		]]>
+    </select>
+    
+    <select id="getZDYBElement" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select * from t_forecastfineelement
+		]]>
+    </select>
+    
+    <select id="getZDYBOutType" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select * from t_forecastfineouttype
+		]]>
+    </select>
+    
+    <select id="getZDYBStationType" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select * from t_tationforecaststype
+		]]>
+    </select>
+    
+    <select id="getGDYBPublishTime" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select * from t_forecastforlattice
+		]]>
+    </select>
+    
+    <select id="deleteProductTime" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	delete from t_forecastfineinfo where id = #{id}
+		]]>
+    </select>
+    
+    <select id="addProductType" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	insert into t_forecastfine (name,stationType,showTable) values (#{name},#{stationType},#{showTable})
+		]]>
+    </select>
+    
+    <select id="addStationType" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	insert into t_tationforecaststype (name,type) values (#{name},#{type})
+		]]>
+    </select>
+    <select id="getStation" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select areaname,t_city.name as cityname,StationNum as stationnum,StationName as stationname,
+Longitude as longitude,Latitude as latitude,Height as height from t_city left join t_county
+on t_city.code=t_county.parentcode
+left join t_station on t_county.code=t_station.AreaCode where StationName is not null
+		]]>
+    </select>
+</mapper> 

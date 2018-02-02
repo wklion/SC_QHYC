@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="E:/Project/2016_EFS_SRC/trunk/GridSync"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libs/classes12.jar"/>
+	<classpathentry kind="lib" path="libs/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libs/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="libs/MGObjectsJava.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/component/MGObjectsJava_64_x64_win_v1.0.0.35"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/jettison-1.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

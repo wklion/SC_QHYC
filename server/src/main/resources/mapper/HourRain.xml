@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IHourRainMapper"> 
+    
+    <select id="hourRainExtAll" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C,  round(max(R1), 1) as R1, round(max(R3)) as R3, round(max(R6)) as R6,
+    	round(max(R12)) as R12, round(max(R24)) as R24 from t_awshourrain a 
+    	where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+    	group by station_id_C
+    	union all
+		]]>
+		<![CDATA[
+    	select a.Station_Id_C,  round(max(R1)) as R1,round( max(R3)) as R3, round(max(R6)) as R6, round(max(R12)) as R12, round(max(R24)) as R24 from 
+    	(
+	    	select Station_Id_C,   R1,   R3,  R6, R12, R24 from ${tableName1} a 
+	    	where datetime >= #{startTime} and datetime <= #{endTime}
+	    	]]>
+    	<if test="startYear != endYear">
+    	 <![CDATA[
+	    	union all
+	    	select Station_Id_C,   R1,   R3,  R6, R12, R24 from ${tableName2} a 
+	    	where datetime >= #{startTime} and datetime <= #{endTime}
+	    	]]>
+    	</if>
+    	) a group by a.station_id_C
+    </select>
+    
+     <select id="hourRainExtAWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C,  max(R1) as R1, max(R3) as R3, max(R6) as R6,
+    	max(R12) as R12,max(R24) as R24 from t_awshourrain a 
+    	where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+    	group by station_id_C
+		]]>
+    </select>
+     <select id="hourRainExtMWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+      <![CDATA[
+    	select a.Station_Id_C, max(R1) as R1, max(R3) as R3, max(R6) as R6, max(R12) as R12, max(R24) as R24 from 
+    	(
+	    	select Station_Id_C,   R1,   R3,  R6, R12, R24 from ${tableName1} a 
+	    	where datetime >= #{startTime} and datetime <= #{endTime}
+	    	]]>
+    	<if test="startYear != endYear">
+    	 <![CDATA[
+	    	union all
+	    	select Station_Id_C,   R1,   R3,  R6, R12, R24 from ${tableName2} a 
+	    	where datetime >= #{startTime} and datetime <= #{endTime}
+	    	]]>
+    	</if>
+    	) a group by a.station_id_C
+    </select>
+    
+    <select id="hourRainExtAREA" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select a.Station_Id_C, max(R1) as R1, max(R3) as R3, max(R6) as R6, max(R12) as R12, max(R24) as R24 from 
+    	(
+    		select Station_Id_C,   R1,   R3,  R6, R12, R24 from t_awshourrain a 
+	    	where datetime >= #{startTime} and datetime <= #{endTime}
+	    	and Station_Id_C in
+	    ]]>
+	    <foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+           #{item}  
+	 	</foreach> 
+	 	<![CDATA[
+	    	union all
+	    	select Station_Id_C,   R1,   R3,  R6, R12, R24 from ${tableName1} a 
+	    	where datetime >= #{startTime} and datetime <= #{endTime} and Station_Id_C in
+    	]]>
+    	 <foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+           #{item}  
+	 	</foreach> 
+    	<if test="startYear != endYear">
+    	<![CDATA[
+    		union all
+	    	select Station_Id_C,   R1,   R3,  R6, R12, R24 from ${tableName2} a 
+	    	where datetime >= #{startTime} and datetime <= #{endTime} and Station_Id_C in
+	    	]]>
+    	 <foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+           #{item}  
+	 	</foreach> 
+    	</if>
+    	<![CDATA[
+    		) a group by a.station_id_C
+    	]]>
+    </select>
+    <select id="hourRainAccumulateStatistics" resultType="java.util.LinkedHashMap"  parameterType="map">
+    	<![CDATA[
+    		select date_format(min(StartTime), '%Y-%m-%d %T') as StartTime, date_format(max(EndTime), '%Y-%m-%d %T') as EndTime, 
+    		sum(SumRain) as SumRain, sum(SumHours) as SumHours, Station_Id_C from t_hourrainsum
+    		where 
+    	]]>
+    	<choose>
+    		<when test="type == 'AWS'">
+    			Station_Id_C like '5%' and
+    		</when>
+    		<when test="type == 'MWS'">
+    			Station_Id_C like 'A%' and
+    		</when>
+    	</choose>
+    	<![CDATA[	
+    		StartTime >= #{StartTime} and EndTime <= #{EndTime}
+    		group by Station_Id_C
+    	]]>
+    </select>
+    
+    <select id="hourRainExtStatistics" resultType="java.util.LinkedHashMap"  parameterType="map">
+    	<![CDATA[
+    		select date_format(min(StartTime), '%Y-%m-%d %T') as StartTime, date_format(max(EndTime), '%Y-%m-%d %T') as EndTime, 
+    		max(R1) as R1, max(R3) as R3, max(R6) as R6, max(R12) as R12, max(R24) as R24, Station_Id_C from t_hourrainext
+    		where 
+    	]]>
+    	<choose>
+	    	<when test="type == 'AWS'">
+	    		Station_Id_C like '5%' and 
+	    	</when>
+	    	<when test="type == 'MWS'">
+	    		Station_Id_C like 'A%' and 
+	    	</when>
+    	</choose>
+    	<![CDATA[	
+    		StartTime >= #{StartTime} and EndTime <= #{EndTime}
+    		group by Station_Id_C
+    	]]>
+    </select>
+    
+    <select id="hourRainAccumulateAll" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    		select round(sum(a.R1), 1) as sum, count(a.R1) as count, a.Station_Id_C from 
+    		(
+    	]]>
+	    <![CDATA[
+	    	select R1, Station_Id_C from t_awshourrain
+			where datetime >= #{startTime} and datetime <= #{endTime}
+			and R1 > 0 
+			union all 
+			select R1, Station_Id_C from ${tableName1}
+			where datetime >= #{startTime} and datetime <= #{endTime}
+			and R1 > 0 
+		]]>
+		<if test="startYear != endYear">
+			<![CDATA[
+				union all 
+				select R1, Station_Id_C from ${tableName2} 
+				where datetime >= #{startTime} and datetime <= #{endTime}
+				and R1 > 0 
+			]]>
+		</if>
+		) a group by a.Station_Id_C
+    </select>
+     <select id="hourRainAccumulateAREA" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+		<![CDATA[
+    		select round(sum(a.R1), 1) as sum, count(a.R1) as count, a.Station_Id_C from 
+    		(
+    	]]>
+	    <![CDATA[
+	    	select R1, Station_Id_C from t_awshourrain
+			where datetime >= #{startTime} and datetime <= #{endTime}
+			and R1 > 0  and Station_Id_C in
+		]]> 
+		<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		 <![CDATA[
+			union all 
+			select R1, Station_Id_C from ${tableName1}
+			where datetime >= #{startTime} and datetime <= #{endTime}
+			and R1 > 0  and Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		<if test="startYear != endYear">
+			<![CDATA[
+				union all 
+				select R1, Station_Id_C from ${tableName2} 
+				where datetime >= #{startTime} and datetime <= #{endTime}
+				and R1 > 0 and Station_Id_C in
+			]]>
+			<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+          	  #{item}  
+		 	</foreach> 
+		</if>
+		) a group by a.Station_Id_C		
+    </select>
+    <select id="hourRainAccumulateAWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select round(sum(a.R1), 1) as sum, count(a.R1) as count, a.Station_Id_C from t_awshourrain a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and a.R1 > 0 
+			group by a.station_Id_C 
+		]]>
+    </select>
+    <select id="hourRainAccumulateMWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    		select round(sum(a.R1), 1) as sum, count(a.R1) as count, a.Station_Id_C from 
+    		(
+    	]]>
+	    <![CDATA[
+			select R1, Station_Id_C from ${tableName1}
+			where datetime >= #{startTime} and datetime <= #{endTime}
+			and R1 > 0 
+		]]>
+		<if test="startYear != endYear">
+			<![CDATA[
+				union all 
+				select R1, Station_Id_C from ${tableName2} 
+				where datetime >= #{startTime} and datetime <= #{endTime}
+				and R1 > 0 
+			]]>
+		</if> 
+		) a group by a.Station_Id_C
+    </select>
+     <select id="hourRainSequenceAll" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24, 
+	    	 a.Station_Id_C from t_awshourrain a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${ritem} > 0
+			union all
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24,  
+			a.Station_Id_C from ${tableName1} a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${ritem} > 0
+		]]>
+		<if test="startYear != endYear">
+			<![CDATA[
+				union all
+				select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24, 
+				 a.Station_Id_C from ${tableName2} a
+				where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+				and ${ritem} > 0
+			]]>
+		</if>
+    </select>
+    <select id="hourRainSequenceAREA" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24, 
+	    	 a.Station_Id_C from t_awshourrain a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${ritem} > 0 and a.Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		 <![CDATA[
+			union all
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24,  
+			a.Station_Id_C from ${tableName1} a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${ritem} > 0 and a.Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		 <if test="startYear != endYear">
+		 	<![CDATA[
+				union all
+				select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24, 
+				 a.Station_Id_C from ${tableName2} a
+				where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+				and ${ritem} > 0 and a.Station_Id_C in
+			]]>
+			<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+	            #{item}  
+			 </foreach> 
+		 </if>
+    </select>
+     <select id="hourRainSequenceAWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24, 
+	    	a.Station_Id_C  from t_awshourrain a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${ritem} > 0
+		]]>
+    </select>
+     <select id="hourRainSequenceMWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24, 
+			 a.Station_Id_C  from ${tableName1} a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${ritem} > 0
+		]]>
+		<if test="startYear != endYear">
+			<![CDATA[
+			union all
+				select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24, 
+				 a.Station_Id_C  from ${tableName2} a
+				where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+				and ${ritem} > 0
+			]]>
+		</if>
+    </select>
+    <!-- 根据指定的要素，查找最大的值 -->
+    <select id="hourRainRankByItemAll" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select round(max(${item}), 1) as ${item}, a.Station_Id_C, a.Station_Name, a.area  from t_awshourrain a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${item} > 0
+			group by a.station_id_c
+			union all
+			select round(max(${item}), 1) as ${item}, a.Station_Id_C, a.Station_Name, a.area  from ${tableName} a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${item} > 0
+			group by a.station_id_c
+		]]>
+    </select>
+    <select id="hourRainRankByItemAWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select round(max(${item}), 1) as ${item}, a.Station_Id_C, a.Station_Name, a.area  from t_awshourrain a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${item} > 0
+			group by a.station_id_c
+		]]>
+    </select>
+    <select id="hourRainRankByItemMWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+			select round(max(${item}), 1) as ${item}, a.Station_Id_C, a.Station_Name, a.area  from ${tableName} a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${item} > 0
+			group by a.station_id_c
+		]]>
+    </select>
+    <select id="hourRainSequenceByItemAll" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${item}, a.Station_Id_C, a.Station_Name, a.area  from t_awshourrain a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${item} > 0
+			union all
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${item}, a.Station_Id_C, a.Station_Name, a.area  from ${tableName} a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${item} > 0
+		]]>
+    </select>
+    
+    <select id="hourRainSequenceByItemAWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${item}, a.Station_Id_C, a.Station_Name, a.area  from t_awshourrain a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${item} > 0
+		]]>
+    </select>
+    <select id="hourRainSequenceByItemMWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${item}, a.Station_Id_C, a.Station_Name, a.area  from ${tableName} a
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and ${item} > 0
+		]]>
+    </select>
+    <select id="hourRainSequenceBySameYearsAll" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${ritem}, a.Station_Id_C  from t_awshourrain a
+			where  ${ritem} > 0 and ${datetimeclaus}
+			union all
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${ritem}, a.Station_Id_C from t_mwshourrain a
+			where  ${ritem} > 0 and ${datetimeclaus}
+		]]>
+    </select>
+    
+    <select id="hourRainSequenceBySameYearsAWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${ritem}, a.Station_Id_C  from t_awshourrain a
+			where ${ritem} > 0 and ${datetimeclaus} 
+		]]>
+    </select>
+    <select id="hourRainSequenceBySameYearsMWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${ritem}, a.Station_Id_C from t_mwshourrain a
+			where ${ritem} > 0 and ${datetimeclaus}
+		]]>
+    </select>
+    <select id="hourRainExtYearsStatisticsAWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+	    	select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${item}, 
+	    	date_format(a.datetime, '%Y')as year, a.Station_Id_C  from t_awshourrain a
+			where ${item} > 0 and ${datetimeclaus} 
+			and a.station_Id_C = #{Station_Id_C}
+		]]>
+    </select>
+    <select id="hourRainExtYearsStatisticsMWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${item}, 
+	    	date_format(a.datetime, '%Y')as year, a.Station_Id_C  from t_mwshourrain a
+			where ${item} > 0 and ${datetimeclaus} 
+			and a.station_Id_C = #{Station_Id_C}
+		]]>
+    </select>
+    <select id="hourRainExtYearsStatisticsALL" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+   			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${item}, 
+	    	date_format(a.datetime, '%Y')as year, a.Station_Id_C   from t_awshourrain a
+			where ${item} > 0 and ${datetimeclaus} 
+			union all
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, ${item}, 
+	    	date_format(a.datetime, '%Y')as year, a.Station_Id_C  from t_mwshourrain a
+			where ${item} > 0 and ${datetimeclaus} 
+		]]>
+    </select>
+    <select id="hourRainExtByTimesAWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+	    	a.Station_Id_C from t_awshourrain a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime}
+		]]>
+    </select>
+    <select id="hourRainExtByTimesMWS" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+	    	a.Station_Id_C from ${tableName} a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime}
+		]]>
+    </select>
+     <select id="hourRainExtByTimesAll" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+   			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+	    	a.Station_Id_C from t_awshourrain a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime}
+			union all
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+	    	a.Station_Id_C  from ${tableName} a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime}
+		]]>
+    </select>
+    <select id="hourRainExtByTimesAREA" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		 <![CDATA[
+   			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+	    	a.Station_Id_C  from t_awshourrain a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime} and a.Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+           #{item}  
+	 	</foreach> 
+	 	<![CDATA[
+			union all
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+	    	a.Station_Id_C  from ${tableName} a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime} and a.Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+           #{item}  
+	 	</foreach> 
+    </select>
+    <select id="hourRainChangeAWS" resultType="java.util.LinkedHashMap"  parameterType="map">
+   	 <![CDATA[
+   			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+	    	a.Station_Id_C   from t_awshourrain a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime} and a.Station_Id_C = #{Station_Id_C}
+			]]>
+    </select>
+    <select id="hourRainChangeMWS" resultType="java.util.LinkedHashMap"  parameterType="map">
+    	<![CDATA[
+    		select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24, 
+	    	a.Station_Id_C   from ${tableName1} a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime} and a.Station_Id_C = #{Station_Id_C}
+			]]>
+		<if test="startYear != endYear">
+		 	<![CDATA[
+		 		union all
+				select date_format(a.datetime, '%Y-%m-%d %T') as datetime, round(a.R1, 1) as R1, round(a.R3, 1) as R3, round(a.R6, 1) as R6, round(a.R12, 1) as R12, round(a.R24, 1) as R24, 
+		    	a.Station_Id_C   from ${tableName2} a
+				where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime} and a.Station_Id_C = #{Station_Id_C}
+		 	]]>
+		</if>
+    </select>
+    <select id="hourRainChangeAll" resultType="java.util.LinkedHashMap"  parameterType="map">
+   		 <![CDATA[
+    		select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+	    	a.Station_Id_C   from t_awshourrain a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime} and a.Station_Id_C = #{Station_Id_C}
+			union all
+			select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+	    	a.Station_Id_C  from ${tableName1} a
+			where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime} and a.Station_Id_C = #{Station_Id_C}
+			]]>
+			<if test="startYear != endYear">
+			 	<![CDATA[
+			 		union all
+			 		select date_format(a.datetime, '%Y-%m-%d %T') as datetime, a.R1, a.R3, a.R6, a.R12, a.R24, 
+			    	a.Station_Id_C  from ${tableName2} a
+					where a.datetime >= #{startDatetime} and a.datetime <= #{endDatetime} and a.Station_Id_C = #{Station_Id_C}
+			 	]]>
+		 	</if>
+    </select>
+    <select id="hourRainStation" resultType="java.util.LinkedHashMap"  parameterType="map">
+   		 <![CDATA[
+   		 	select Station_Id_C, Station_Name, date_format(buildDate, '%Y-%m-%d %T') as buildDate from t_HourRainStation where Station_Name is not null
+   		 ]]>
+    </select>
+    <select id="hourRainStationByStations" resultType="java.util.LinkedHashMap"  parameterType="map">
+   		 <![CDATA[
+   		 	select Station_Id_C, Station_Name, date_format(buildDate, '%Y-%m-%d %T') as buildDate from t_HourRainStation where Station_Id_C in
+   		 	]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+    </select>
+    <!-- 小时降水排位 -->
+     <select id="hourRainSort" resultType="java.util.LinkedHashMap"  parameterType="map">
+   		 <![CDATA[
+   		 	select count(distinct R1) as sort, 'R1' as type, Station_Id_C from ${tableName1} where Station_Id_C = #{Station_Id_C1} and R1 >= #{r1}
+			union all
+			select count(distinct R3) as sort, 'R3' as type, Station_Id_C from ${tableName2} where Station_Id_C = #{Station_Id_C3} and R3 >= #{r3}
+			union all
+			select count(distinct R6) as sort, 'R6' as type, Station_Id_C from ${tableName3} where Station_Id_C = #{Station_Id_C6} and R6 >= #{r6}
+			union all
+			select count(distinct R12) as sort, 'R12' as type, Station_Id_C from ${tableName4} where Station_Id_C = #{Station_Id_C12} and R12 >= #{r12}
+			union all
+			select count(distinct R24) as sort, 'R24' as type, Station_Id_C from ${tableName5} where Station_Id_C = #{Station_Id_C24} and R24 >= #{r24}
+   		 ]]>
+    </select>
+    <!-- 小时降水，按站倒序排序  -->
+    <select id="hourRainSortByStation" resultType="java.util.LinkedHashMap"  parameterType="map">
+   		 <![CDATA[
+   		 	select Station_Id_C, ${item} as value, date_format(datetime, '%Y-%m-%d %T') as datetime from ${tableName} 
+   		 	where Station_Id_C = #{Station_Id_C}
+   		 	order by ${item} desc limit ${limit}
+   		 ]]>
+    </select>
+    
+</mapper> 

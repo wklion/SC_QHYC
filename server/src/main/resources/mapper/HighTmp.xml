@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IHighTmpMapper"> 
+    <!-- 按in的方式过滤站点 -->
+    <select id="queryHighTmpByRange" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, b.Station_Name, a.Lon, a.Lat, a.year, date_format(a.datetime, '%Y-%m-%d') as datetime, a.TEM_Max, b.Country, b.area
+    	from t_max_tmp a left join t_station b on a.Station_Id_C = b.Station_Id_C 
+    	where datetime >= #{startTime} and datetime <= #{endTime} and a.Station_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+		 and TEM_Max >= #{level1HighTmp}
+		 order by b.Country , a.datetime, a.Station_Id_C
+    </select>
+    
+    <select id="queryHighTmpByStation" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, Lon, Lat, year, date_format(datetime, '%Y-%m-%d') as datetime, TEM_Max
+    	from t_max_tmp where datetime >= #{startTime} and datetime <= #{endTime} 
+		 and TEM_Max >= #{level1HighTmp}
+		 and Station_Id_C in
+	]]> 	 
+	<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+        #{item}  
+	</foreach>
+		 	    
+     </select>
+     
+    <select id="queryHighTmpByYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, Lon, Lat, year, date_format(datetime, '%Y-%m-%d') as datetime, TEM_Max
+    	from t_max_tmp where (date_format(datetime, '%m%d') >= #{startTime} and date_format(datetime, '%m%d') <= #{endTime}) 
+    	and TEM_Max >= #{level1HighTmp} and year >= #{startYear} and year <= #{endYear} and Station_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+    </select>
+    
+</mapper> 

@@ -1,0 +1,7 @@
+factorPath E:\SC\Factor
+indexPath E:\SC\Factor
+stationPath E:\SC\Factor
+corrPath E:\SC\Factor
+forcastPath E:\SC\Factor
+selectIndexPath E:\SC\Factor
+     

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IDisasterAlertMapper"> 
+    <!-- 这里的id必须和IStatisticsMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+    <!--  where ForecastDate = #{ForecastDate} 测试阶段，把条件去掉 -->
+    <select id="getCurrentLowTmpAreaAlert" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select id, date_format(StartTime, '%Y-%m-%d') as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime, date_format(ForecastDate, '%Y-%m-%d') as ForecastDate,
+    	 count(1) as SumStations, SumAnomaly, 'LowTmp' as type 
+    	from t_lowtmpareaalert where ForecastDate = #{ForecastDate}
+		]]>
+    </select>
+    <select id="getCurrentHighTmpAreaAlert" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select id, date_format(StartTime, '%Y-%m-%d') as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime, date_format(ForecastDate, '%Y-%m-%d') as ForecastDate, 
+    	count(1) as SumStations, RI, level, DI, 'HighTmp' as type
+    	 from t_areahightmpalert where ForecastDate = #{ForecastDate}
+		]]>
+    </select>
+    <select id="getCurrentContinueRainAreaAlert" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select id, date_format(StartTime, '%Y-%m-%d') as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime, date_format(ForecastDate, '%Y-%m-%d') as ForecastDate, 
+    	SumStations, PreDays, 'ContinueRain' as type
+    	 from t_continuerainareaalert where ForecastDate = #{ForecastDate}
+		]]>
+    </select>
+    <select id="getCurrentMCIAreaAlert" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select id, date_format(StartTime, '%Y-%m-%d') as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime, date_format(ForecastDate, '%Y-%m-%d') as ForecastDate, 
+    	'MCIArea' as type
+    	 from t_mciareaalert where ForecastDate = #{ForecastDate}
+		]]>
+    </select>
+    
+    <select id="getLowTmpStationAlert" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, b.Station_Name, date_format(a.StartTime, '%Y-%m-%d') as StartTime, date_format(a.EndTime, '%Y-%m-%d') as EndTime, date_format(a.ForecastDate, '%Y-%m-%d') as ForecastDate, 
+    	a.PersistHous, a.AvgTmp,Anomaly  
+    	from t_lowtmpstationalert a left join t_station b on a.station_id_C = b.station_Id_C
+    	 where a.ForecastDate = #{ForecastDate}
+		]]>
+    </select>
+    
+     <select id="getHighTmpStationAlert" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, b.Station_Name, date_format(a.StartTime, '%Y-%m-%d') as StartTime, date_format(a.EndTime, '%Y-%m-%d') as EndTime, date_format(a.ForecastDate, '%Y-%m-%d') as ForecastDate, 
+    	a.SI, a.level, a.G  
+    	from t_stationhightmpalert a left join t_station b on a.station_id_C = b.station_Id_C 
+    	 where a.ForecastDate = #{ForecastDate}
+		]]>
+    </select>
+    
+     <select id="getContinueRainStationAlert" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, b.Station_Name, date_format(a.StartTime, '%Y-%m-%d') as StartTime, date_format(a.EndTime, '%Y-%m-%d') as EndTime, date_format(a.ForecastDate, '%Y-%m-%d') as ForecastDate, 
+    	a.NoSunDays, a.RainDays, a.Pre
+    	from t_continuerainstationalert a left join t_station b on a.station_id_C = b.station_Id_C 
+    	 where a.ForecastDate = #{ForecastDate}
+		]]>
+    </select>
+    
+     <select id="getForecastByForecastTime" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C,WeatherState12, WeatherState24, MaxTmp, MinTmp, date_format(ForscastDate, '%Y-%m-%d') as ForscastDate, date_format(FutureDate, '%Y-%m-%d') as FutureDate,
+	    	PreTime12, PreTime24
+    	 	from t_forecastdata where ForscastDate = #{ForecastDate}
+		]]>
+    </select>
+    
+    <select id="getMCIAreaAlert" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select  date_format(a.StartTime, '%Y-%m-%d') as StartTime, date_format(a.EndTime, '%Y-%m-%d') as EndTime, date_format(a.ForecastDate, '%Y-%m-%d') as ForecastDate, 
+	    	StationCnts 
+    		from t_mciareaalert a 
+    	 	where a.ForecastDate = #{ForecastDate}
+		]]>
+    </select>
+    
+</mapper> 

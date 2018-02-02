@@ -1,0 +1,1368 @@
+﻿html,body{
+    height: 100%;
+}
+body{
+    padding: 0px;
+    margin: 0px;
+    font-family: "arial","Hiragino Sans GB","Microsoft Yahei","微软雅黑","宋体","Tahoma","Arial","Helvetica","STHeiti";
+    color: #333;
+}
+div.body{
+    height: 100%;
+}
+/**顶部*/
+.banner{
+    height: 60px;
+    position: relative;
+    color: #fff;
+	background-color: rgb(18,137,237);
+}
+.logo{
+    float: left;
+    height: 60px;
+    margin: 0px 0px 0px 20px;
+    line-height: 60px;
+}
+.logo img{
+    height: 100%;
+}
+.logo .title{
+    margin-left: 10px;
+    font-size: 28px;
+    vertical-align: top;
+    letter-spacing: 5px;
+}
+#login{
+    position: absolute;
+    right: 10px;
+    top:10px;
+    font-size: 14px;
+}
+#login a{
+    margin-left: 10px;
+    cursor: pointer;
+}
+#ScreenFull{
+    position: absolute;
+    right: 5px;
+    bottom:5px;
+    cursor: pointer;
+}
+/*页面导航按钮*/
+.navigation{
+    position: absolute;
+    right: 150px;
+    bottom: 5px;
+}
+.navigation button{
+    padding: 5px 10px;
+    font-size: 16px;
+    font-family: "Microsoft Yahei";
+    margin: 0px 10px 0px 10px;
+    border: 0px;
+    color:#fff;
+    background: none;
+    cursor: pointer;
+    outline:none;
+}
+.navigation button:hover,.navigation button.active{
+    border-bottom:solid #f7921c 4px;
+    outline:none;
+}
+
+.content{
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    top:60px;
+    right: 0px;
+}
+/**左侧竖条*/
+#sideWrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 56px;
+    background-color:rgb(51, 85, 117);
+}
+.nav__bg-slider {
+    width: 56px;
+    height: 72px;
+    position: absolute;
+    z-index: 1;
+    background-color: #f78d1d; /*3385FF*/
+    display: none;
+}
+.navlist {
+    position: absolute;
+    padding:0;
+    top: 0;
+    bottom: 0;
+    z-index: 2;
+    list-style: none;
+    margin: 0px;
+}
+.navlist li {
+    text-align: center;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    left: 0;
+    cursor: pointer;
+}
+.navlist a {
+    display: inline-block;
+    text-align: center;
+    width: 56px;
+    height: 60px;
+    text-decoration: none;
+}
+.navlist span {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    color: #ccc;
+}
+.navlist img {
+    display: block;
+    width: 32px;
+    height: 32px;
+    margin: 12px auto 0px;
+}
+.weather-item{
+    display: block;
+    cursor: auto;
+    text-decoration: none;
+    color: #999;
+    text-align: center;
+    padding-top: 10px;
+    height: auto;
+}
+.weather-box {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 56px;
+}
+.weather-item img {
+    display: block;
+    width: 28px;
+    height: 28px;
+    margin: 0 auto 5px;
+    border: 0;
+}
+/**显示隐藏按钮*/
+#displayBtn{
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    width: 15px;
+    height: 58px;
+    border-top:1px solid #d0d1d1;
+    border-right:1px solid #d0d1d1;
+    border-bottom:1px solid #d0d1d1;
+    color:#a0a1a3;
+    cursor:pointer;
+    font-size: 16px;
+    text-align: center;
+    line-height: 58px;
+    background: #ededed;
+    box-shadow: 3px 0px 15px 0px #a0a1a3;
+}
+/*地图区域**/
+#map_div{
+    position: absolute;
+    right: 0px;
+    height: 100%;
+}
+#map{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+.map_normal{
+    left: 396px;
+}
+.map_maximize{
+    left: 56px;
+}
+
+.grid_normal{
+	
+	left: 396px;
+	width: 980px;
+}
+
+.grid_maximize{
+	
+	left: 56px;
+	width: 1855px;
+}
+.mapd{
+    position: absolute;
+    width: 50%;
+    height: 50%;
+}
+#chart{
+    position: absolute;
+    width: 100%;
+    height: 20%;
+}
+.chart_normal{
+    left: 320px;
+}
+/**左侧菜单*/
+#menu{
+    left: 56px;
+    position: absolute;
+    height: 100%;
+    border-right: 1px solid #d0d1d1;
+    background: #ededed;
+    z-index: 5;
+    box-shadow: 3px 0px 15px 0px #a0a1a3;
+}
+.menu_normal{
+    width: 340px;
+}
+.menu_minimize{
+    left: 56px;
+    width: 0px;
+}
+#menu_bd{
+    position: relative;
+    height: 100%;
+    z-index: 10;
+    overflow: auto;
+    background: rgb(225, 225, 235);
+}
+#menu_bd .title1{
+    font-size: 14px;
+    color: #006699;
+    padding: 5px 0px 0px 10px;
+}
+#menu_bd .title2{
+    font-size: 12px;
+    color: #a06c94;
+    padding: 5px 0px 5px 20px;
+}
+#menu_bd .btn_line{
+    padding: 0px 0px 5px 35px;
+}
+#menu_bd .btn_line1, #menu_bd .btn_line2{
+    padding: 0px 0px 5px 70px;
+}
+#menu_bd .btn_line3{
+    padding: 0px 0px 5px 35px;
+}
+/* #menu_bd button{
+    border: solid 1px rgb(150,160,200);
+    padding: 5px 0px;
+    border-radius: 4px;
+    cursor:pointer;
+    margin: 0px 0px 0px 10px;
+    font-size: 12px;
+    font-family: "Microsoft YaHei";
+    background: -webkit-gradient(linear, left top, left bottom, rgb(241,245,250), rgb(183,203,231));
+    background: linear-gradient(to bottom,rgb(241,245,250) 0,rgb(183, 203,231) 100%);
+    box-shadow: 1px 1px 1px rgb(180,190,200);
+} */
+.btn_line button{
+    width: 80px;
+}
+.btn_line1 button{
+    width: 50px;
+}
+.btn_line2 button{
+    width: 80px;
+}
+.btn_line3 button{
+    width: 50px;
+}
+#menu_bd button.disabled{
+    background: none;
+    border: solid 1px rgb(150,160,200);
+    color: #fff;
+    outline:none;
+    box-shadow:none;
+}
+#menu_bd button.saved{
+    background:-webkit-gradient(linear, left top, left bottom, from(rgba(200, 255, 200, 1.0)), to(rgba(0, 255, 0, 1.0)));
+    background:linear-gradient(to bottom,rgba(200, 255, 200, 1.0) 0,rgba(0, 255, 0, 1.0) 100%);
+    color:rgb(51,51,100);
+}
+#menu_bd button:hover,#menu_bd button.active{
+    background: #f78d1d;
+    background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+    background: linear-gradient(to bottom,#faa51a 0,#f47a20 100%);
+    border: solid 1px #da7c0c;
+    color: #fff;
+    outline:none;
+}
+
+/**拖拽面板**/
+.dragPanel{
+    position:absolute;
+    width:220px;
+    border:1px solid #547a7a;
+    background:#fff;
+    z-index: 20;
+}
+.dragPanel .title{
+    height:35px;
+    background:rgb(51,85,117);
+    color:#eee;
+    font-size:16px;
+    font-weight:bold;
+    line-height:35px;
+    cursor: move;
+    padding: 0px 5px 0px 5px;
+}
+.dragPanel .closeBtn{
+    float:right;
+    cursor:pointer;
+    color:#fff;
+    font-size: 28px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.dragPanel .body{
+    min-height:30px;
+    padding:5px;
+}
+.dragPanel .row1{
+    padding: 5px;
+    font-size: 14px;
+}
+#Panel_LQDZ button{
+    border: solid 1px #b7b7b7;
+    padding: 5px 5px;
+    border-radius: 6px;
+    cursor:pointer;
+    margin: 0px 0px 0px 5px;
+    font-size: 12px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+    background: linear-gradient(to bottom,#fff 0,#ededed 100%);
+}
+#Panel_LQDZ button:hover,#Panel_LQDZ button.active{
+    background: #f78d1d;
+    background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+    background: linear-gradient(to bottom,#faa51a 0,#f47a20 100%);
+    border: solid 1px #da7c0c;
+    color: #fff;
+    outline:none;
+}
+#Panel_LQDZ button.disabled{
+    background: #ededed;
+    border: solid 1px #b7b7b7;
+    color: #fff;
+    outline:none;
+}
+#Panel_FXDZ img{
+    border:1px solid #98a7bb;
+    box-shadow: 0px 0px 5px 0px #a0a1a3;
+}
+#Panel_FXDZ img.active{
+    border:1px solid #98a7bb;
+    background-color:rgb(241, 220, 136);
+}
+#Panel_Tools img{
+    border: solid 1px #FFFFFF;
+    margin: 2px;
+    cursor:pointer;
+}
+#Panel_Tools img:hover,img.active{
+    border: solid 1px #b7b7b7;
+    background-color:rgb(241, 220, 136);
+}
+#Panel_Tools button{
+    border: solid 1px #b7b7b7;
+    padding: 5px 5px;
+    border-radius: 6px;
+    cursor:pointer;
+    margin: 0px 0px 0px 5px;
+    font-size: 12px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+    background: linear-gradient(to bottom,#fff 0,#ededed 100%);
+    outline:none;
+}
+#Panel_Tools button:hover,#Panel_Tools button.active{
+    background: #f78d1d;
+    background: -webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+    background: linear-gradient(to bottom,#faa51a 0,#f47a20 100%);
+    border: solid 1px #da7c0c;
+    color: #fff;
+    outline:none;
+}
+#Panel_Tools button.disabled{
+    background: #ededed;
+    border: solid 1px #b7b7b7;
+    color: #fff;
+    outline:none;
+}
+#Panel_Tools td{
+    cursor:pointer;
+}
+#div_IncreaseValueItems span{
+    display:inline-block;
+    width:32px;
+    height:32px;
+    border:1px solid #adadad;
+    text-align:center;
+    line-height:32px;
+}
+/**日期选择器**/
+#dateSelect{
+    margin-left: 65px;
+}
+#dateSelect .dateBtn{
+    margin: 0px 0px 0px 0px;
+    cursor:pointer;
+}
+#dateSelect input{
+    margin: 0px 5px 0px 5px;
+    border: 0px;
+    width: 150px;
+    font-size: 14px;
+    font-weight: bold;
+    background: none;
+    text-align: center;
+}
+
+/**预报时效工具-日期表格**/
+.yubaoshixiao_table_day{
+    /*width:100%;*/
+    margin-right: 4px;
+    border: none;
+}
+.yubaoshixiao_table_day td{
+    border: none;
+    color: rgb(51,51,100);
+    width:60px;
+    /*height:20px;*/
+    /*cursor:pointer;*/
+    font-size:10px;
+    text-align:right;
+    vertical-align:top
+}
+
+/**预报时效工具**/
+.yubaoshixiao_table{
+	/*width:100%;*/
+	margin-left: 0px;
+    border: none;
+}
+.yubaoshixiao_table td{
+	border-color:rgb(150,160,200);
+    color: rgb(51,51,100);
+	/*width:20px; //适用于逐小时*/
+    width:60px; /*//适用于逐3小时*/
+	height:20px;
+	cursor:pointer;
+	background:-webkit-gradient(linear, left top, left bottom, rgb(241,245,250), rgb(183, 203,231));
+    background: linear-gradient(to bottom,rgb(241,245,250) 0,rgb(183, 203,231) 100%);
+	font-size:12px;
+	text-align:center;
+}
+.yubaoshixiao_table td.saved{
+    background:-webkit-gradient(linear, left top, left bottom, from(rgba(200, 255, 200, 1.0)), to(rgba(0, 255, 0, 1.0)));
+    background:linear-gradient(to bottom,rgba(200, 255, 200, 1.0) 0,rgba(0, 255, 0, 1.0) 100%);
+    color:rgb(51,51,100);
+}
+.yubaoshixiao_table td.subjective{
+    background:url("../imgs/img_pen.png") no-repeat 95% 50%,-webkit-gradient(linear, left top, left bottom, from(rgba(200, 255, 200, 1.0)), to(rgba(0, 255, 0, 1.0)));
+    background:url("../imgs/img_pen.png") no-repeat 95% 50%,linear-gradient(to bottom,rgba(200, 255, 200, 1.0) 0,rgba(0, 255, 0, 1.0) 100%);
+    color:rgb(51,51,100);
+}
+.yubaoshixiao_table td.modified{
+    background:-webkit-gradient(linear, left top, left bottom, from(rgba(200, 200, 255, 1.0)), to(rgba(51, 133, 255, 1.0)));
+    background: linear-gradient(to bottom,rgba(200, 200, 255, 1.0) 0,rgba(51, 133, 255, 1.0) 100%));
+    color:#fff;
+}
+.yubaoshixiao_table td.disabled{
+    background:none;
+    color:#fff;
+}
+.yubaoshixiao_table td:hover,.yubaoshixiao_table td.active{
+	background:-webkit-gradient(linear, left top, left bottom, from(#faa51a), to(#f47a20));
+    background: linear-gradient(to bottom,#faa51a 0,#f47a20 100%);
+	color:#fff;
+}
+
+/*预报时效说明*/
+#yubaoshixiaoshuoming span{
+    float:left;
+    padding:0 5px 0 2px;
+}
+#yubaoshixiaoshuoming div{
+    width:15px;
+    height:15px;
+    float:left;
+    border: 1px solid;
+    border-color:rgb(150,160,200);
+}
+/*地图图层选择样式*/
+div.mapLayer {
+    float: right;
+    top: 5px;
+    right: 5px;
+    background-color: #fff;
+    height: 62px;
+    position: absolute;
+}
+
+/*checkboxCircle*/
+div.checkboxCircle {
+    background: #DDD none repeat scroll 0% 0%;
+    border-radius: 100%;
+    position: relative;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5);
+    float: right;
+    margin-right: 10px;
+    width: 14px;
+    height: 14px;
+    margin-top: 2px;
+}
+
+div.checkboxCircle input {
+    display: none;
+}
+
+div.checkboxCircle label {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border-radius: 100px;
+    transition: all 0.5s ease 0s;
+    cursor: pointer;
+    position: absolute;
+    z-index: 1;
+    background: #FFF none repeat scroll 0% 0%;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5) inset;
+    top: 2px;
+    left: 2px;
+}
+
+div.checkboxCircle input[type=checkbox]:checked + label {
+    background: rgb(52,152,219);
+}
+
+div.smallTitle {
+    width: 100%;
+    height: 22px;
+    background-color: rgb(240,248,254);
+    margin: 3px 0px 0px 0px;
+    font-size: 14px;
+    padding-top: 3px;
+}
+div.smallTitle span {
+    margin: 3px 0px 0px 3px;
+    font-weight: bold;
+}
+
+.load-container {
+    /*border: 1px solid rgba(255, 255, 255, 0.2);*/
+    width: 240px;
+    height: 240px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.load6 .loader {
+    font-size: 90px;
+    text-indent: -9999em;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    margin: 0.8em auto;
+    position: relative;
+    -webkit-animation: load6 1.7s infinite ease;
+    animation: load6 1.7s infinite ease;
+}
+
+.loader {
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+#div_legend_items div{
+    width: 40px;
+    height: 25px;
+    float:left;
+    border:1px solid rgb(200,200,150);
+    text-align:center;
+    padding: 3px;
+    color:#FFF;
+    text-shadow: 0px 0px 2px #000;
+}
+#div_legend_itemTexts div{
+    width: 50px;
+    height: 25px;
+    float:left;
+    text-align:right;
+}
+
+#divContextMenu div{
+    padding: 3px 15px;
+}
+
+#divContextMenu div:hover{
+    background-color: rgb(66, 129, 244);
+    color: #FFFFFF;
+}
+/**
+ * 上传文件 input 框样式
+ */
+.a-upload {
+    padding: 4px 10px;
+    height: 20px;
+    line-height: 20px;
+    position: relative;
+    cursor: pointer;
+    color: #888;
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+    outline: none;
+}
+
+.a-upload  input {
+    position: absolute;
+    font-size: 80px;
+    right: 0;
+    top: 10px;
+    height: 30px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    cursor: pointer
+}
+
+.a-upload:hover {
+    color: #444;
+    background: #eee;
+    border-color: #ccc;
+    text-decoration: none;
+    outline: none;
+}
+
+.a-upload:focus{
+    color: #888;
+    outline: none;
+    text-decoration: none;
+}
+
+.bottomPanelImg{
+	
+	width: 40px;
+    height: 12px;
+    line-height: 12px;
+    margin-left: 50%;
+    background-color: #ffffff;
+    border: 1px solid #AAAAAB;
+    border-bottom-color: #ffffff;
+    text-align: center;
+    margin-left: 600px;
+    cursor: pointer;
+	
+}
+
+.ZDYBTable{
+    height: 100%;
+    max-width: 10000%;
+    text-align: center;
+    font-size: 12px;
+    border-collapse:collapse;
+    font-family: Microsoft YaHei;
+    background-color: #FFFFFF;
+    border:rgb(216,216,216) solid 1px;
+}
+
+.ZDYBTable td{
+    width: 101px;
+    height: 21px;
+    border:rgb(200,200,200) solid 1px;
+    padding: 0px 1px;
+}
+td.zdybType{
+    background-image: linear-gradient(to top,rgb(230,230,230) 0,rgb(246,246,246) 100%);
+}
+
+.ZDYBTitleTable{
+    height: 100%;
+    max-width: 10000%;
+    text-align: center;
+    font-size: 12px;
+    border-collapse:collapse;
+    font-family: Microsoft YaHei;
+}
+
+.ZDYBTitleTable td{
+    width: 101px;
+    border:rgb(200,200,200) solid 1px;
+    background-image: linear-gradient(to top,rgb(230,230,230) 0,rgb(246,246,246) 100%);
+}
+
+.ZDYBLeftTable{
+    height: 100%;
+    max-width: 10000%;
+    text-align: center;
+    font-size: 12px;
+    border-collapse:collapse;
+    font-family: Microsoft YaHei;
+}
+
+.ZDYBLeftTable td{
+    border:rgb(200,200,200) solid 1px;
+    background-image: linear-gradient(to top,rgb(230,230,230) 0,rgb(246,246,246) 100%);
+}
+
+.zdybElement{
+    cursor: pointer;
+}
+.zdybElement:hover{
+    background-color: rgb(211,211,211);
+}
+
+.zdybElementChange{
+    position: absolute;
+    width: 101px;
+    max-height: 250px;
+    background-color: #FFFFFF;
+    border: 1px solid gray;
+    z-index: 999;
+    display: none;
+    cursor: pointer;
+    margin: 0px;
+    list-style:none;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.zdybElementChange li{
+    height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 97px;
+    overflow: hidden;
+    padding-left: 5px;
+}
+
+.zdybElementChange li:hover{
+    background-color: rgb(66,129,244);
+    color: #FFFFFF;
+}
+
+input.zdybTemp{
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+    border-color: #FFFFFF;
+    box-shadow: 0px 1px 1px rgb(255,255,255) inset;
+    text-align: center;
+    height: 18px;
+    margin-bottom: 1px;
+    background-color: white;
+}
+
+div.zdybPreview{
+    border: 1px solid rgb(235,235,235);
+    padding-left: 10px;
+    width: 100%;
+    background-color: white;
+    display: none;
+}
+
+table.zdybPreviewTable{
+    text-align: center;
+}
+
+table.zdybPreviewTable td{
+    padding-left: 5px;
+}
+
+table.zdybGruideTable{
+    margin-left: 10px;
+    text-align: center;
+}
+
+table.zdybGruideTable td{
+    width: 150px;
+    padding-left: 5px;
+}
+
+.zdybUpdateDiv{
+    float: right;
+    height: 100%;
+    line-height: 27px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid rgb(240,240,240);
+    background-color: rgb(195,211,234);
+    cursor: pointer;
+}
+
+.zdybUpdateDiv:hover{
+    background-color: rgb(246,135,30);
+}
+
+.zdybPreviewClass{
+    float: left;
+    height: 100%;
+    line-height: 27px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid rgb(240,240,240);
+    background-color: rgb(195,211,234);
+    cursor: pointer;
+}
+
+.zdybPreviewClass:hover{
+    background-color: rgb(246,135,30);
+}
+
+.zdybRelationClass{
+    float: left;
+    height: 100%;
+    line-height: 27px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid rgb(240,240,240);
+    background-color: rgb(195,211,234);
+    cursor: pointer;
+}
+
+.zdybRelationClass:hover{
+    background-color: rgb(246,135,30);
+}
+
+.zdybCityDiv{
+    float: left;
+    height: 100%;
+    line-height: 27px;
+    padding-left: 5px;
+    padding-right: 5px;
+    border: 1px solid rgb(240,240,240);
+    background-color: rgb(195,211,234);
+    background-image: url("../imgs/zdybTop.png");
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+    width: 73px;
+    cursor: pointer;
+}
+
+.zdybCityDiv:hover{
+    background-color: rgb(246,135,30);
+}
+
+.zdybCityChangeDiv{
+    position: absolute;
+    width: 60px;
+    background-color: #fff;
+    display: block;
+    margin-top: 29px;
+    border: 1px solid rgb(240,240,240);
+    display: none;
+}
+
+.zdybCityChange{
+    height: 20px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding-left: 5px;
+    cursor: pointer;
+}
+
+.zdybCityChange:hover{
+    background-color: rgb(246,135,30);
+}
+
+.zdybPreviewOptions{
+    height: 30px;
+    line-height: 27px;
+    background-color: rgb(240,240,240);
+    border-bottom: 1px solid rgb(200,200,200);
+    border-left: 1px solid rgb(200,200,200);
+}
+
+.xzybPageDiv{
+    float: left;
+    width: 55px;
+    height: 26px;
+    background-color: rgb(240,240,240);
+    text-align: center;
+    margin: 7px;
+    line-height: 26px;
+    cursor: pointer;
+}
+
+.xzybPageDiv:hover{
+    background-color: rgb(76,158,217);
+}
+
+.zdybTableSelected{
+   background-color:rgb(249,158,28);
+}
+.zdybWeather1{
+    background-color: rgb(217,237,247);
+}
+.zdybWeather2{
+    background-color: rgb(253,249,227);
+}
+.zdybWeather3{
+    background-color: rgb(223,239,215);
+}
+
+
+
+/*站点预报设置*/
+
+.ZDYBSetModular{
+    width: 100%;
+    min-height: 200px;
+}
+
+.zdybSetPublishTime{
+    width:54px;
+    height:25px;
+    line-height:25px;
+    margin-top:5px;
+    outline: none;
+}
+
+.zdybSetMakeTime{
+    width:80px;
+    height:25px;
+    line-height:25px;
+    margin-top:5px;
+}
+
+.zdybStationRow{
+    min-height: 35px;
+    float: left;
+    cursor: pointer;
+}
+
+.zdybSetStation{
+    float: left;
+    background-color: rgb(246,246,246);
+    font-size: 12px;
+    text-align: center;
+    line-height: 22px;
+    margin: 5px 0px 0px 5px;
+    padding: 0px 2px;
+}
+.zdybSetStation:hover{
+    background-color: rgb(214, 225, 248);
+}
+
+.zdybStationName{
+    float: left;
+    height: 22px;
+    line-height: 22px;
+    margin: 5px 0px 0px 10px;
+    font-weight: bold;
+}
+
+.zdybPanelTop{
+    height: 100%;
+    padding-top: 10px;
+}
+
+.zdybAddbt{
+    margin-left: 5px;
+    font-size: 28px;
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    color: gray;
+    cursor: pointer;
+    border: 1px solid rgb(225,225,235);
+}
+
+.zdybAddbt:hover{
+    border-color: gray;
+}
+
+.zdybSetElementRow{
+    float: left;
+    width: 100%;
+    min-height: 35px;
+}
+
+.zdybSetElement{
+    float: left;
+    background-color: rgb(246,246,246);
+    font-size: 12px;
+    text-align: center;
+    line-height: 22px;
+    margin: 5px 0px 0px 5px;
+    cursor: pointer;
+    padding: 0px 2px;
+}
+.zdybSetElement:hover{
+    background-color: rgb(214, 225, 248);
+}
+
+.zdybSetArea{
+    float: left;
+    background-color: rgb(246,246,246);
+    font-size: 12px;
+    text-align: center;
+    line-height: 22px;
+    margin: 8px 0px 0px 0px;
+    cursor: pointer;
+    padding: 0px 4px;
+}
+.zdybSetArea:hover{
+    background-color: rgb(214, 225, 248);
+}
+
+.zdybSetOutType{
+    float: left;
+    background-color: rgb(246,246,246);
+    font-size: 12px;
+    text-align: center;
+    line-height: 22px;
+    margin: 8px 0px 0px 10px;
+    cursor: pointer;
+    padding: 0px 4px;
+}
+.zdybSetOutType:hover{
+    background-color: rgb(214, 225, 248);
+}
+
+.zdybElementTitle{
+    float: left;
+    height: 22px;
+    line-height: 22px;
+    margin: 5px 0px 0px 0px;
+    font-weight: bold;
+    width: 50px;
+    display: block;
+}
+.zdybElementName{
+    float: left;
+    height: 22px;
+    line-height: 22px;
+    margin: 5px 0px 0px 0px;
+    width: 100px;
+    display: block;
+}
+
+.zdybSetSave{
+    float: right;
+    margin: 10px;
+}
+
+.zdybSetStationAll{
+    float: right;
+    margin-right: 10px;
+}
+
+.zdybAddElement{
+    display: inline-block;
+    font-size: 24px;
+    width: 26px;
+    height: 25px;
+    line-height: 20px;
+    color: gray;
+    cursor: pointer;
+    border: 1px solid rgb(225,225,235);
+}
+.zdybSetElementSelect{
+    float: left;
+    width: 100px;
+    font-size: 12px;
+    padding: 0px;
+    height: 23px;
+    margin: 4px 5px 0px -5px;
+}
+
+.zdybSetElementDelete{
+    float: left;
+    height: 22px;
+    line-height: 22px;
+    margin: 5px 0px 0px 10px;
+    font-size: 22px;
+    text-align: center;
+    cursor: pointer;
+}
+.zdybSetElementDelete:hover{
+    font-weight: bold;
+}
+
+.zdybSetAreaTime{
+    float: left;
+}
+
+.zdybProductTimeDelete{
+    float: right;
+    height: 22px;
+    line-height: 22px;
+    margin: 5px 8px 0px 0px;
+    font-size: 22px;
+    text-align: center;
+    cursor: pointer;
+}
+.zdybProductTimeDelete:hover{
+    font-weight: bold;
+}
+
+.zdybProductIsSubmit{
+     float: right;
+     height: 10px;
+     width: 10px;
+     margin: 8px 2px;
+     border-radius: 50%;
+     background-color: green;
+ }
+.zdybProductIsNotSubmit{
+    float: right;
+    height: 10px;
+    width: 10px;
+    margin: 8px 2px;
+    border-radius: 50%;
+    background-color: #808080;
+}
+
+.zdybTimeType{
+
+}
+.zdybTimeTypeDiv{
+    float: left;
+    margin-top: 10px;
+    height: 26px;
+    line-height: 22px;
+}
+.zdybTimeTypeDiv input{
+    outline: none;
+}
+
+
+/*左侧导航*/
+.dis_menu_head{height:32px;line-height:32px;padding-left:20px;font-size:14px;color:#525252;cursor:pointer;border:1px solid #e1e1e1;position:relative;margin:0px;font-weight:bold;background:#f1f1f1 url(../imgs/pro_down.png) center right no-repeat;}
+.dis_current{background:#f1f1f1 url(../imgs/pro_left.png) center right no-repeat;}
+.dis_menu_body{line-height:27px;border-left:1px solid #e1e1e1;backguound:#fff;border-right:1px solid #e1e1e1;}
+.dis_menu_body div{display:block;height:27px;line-height:27px;padding-left:38px;color:#777777;background:#fff;text-decoration:none;border-bottom:1px solid #e1e1e1;outline:none;}
+.dis_menu_body div:hover{cursor: pointer;background-color: rgb(214, 225, 248);}
+/*
+.dis_menu_body div{display:block;height:16px;line-height:36px;height: auto;color:#777777;background:#fff;text-decoration:none;border-bottom:1px solid #e1e1e1;}
+.dis_menu_body div:hover{text-decoration:none;}
+.dis_menu_body div a{display:block;height:36px;line-height:36px;padding-left:58px;color:#777777;background:#fff;text-decoration:none;border-bottom:1px solid #e1e1e1;}
+.dis_menu_body div a:hover{text-decoration:none;}*/
+
+
+#table_windDirectionItems span{
+    display:inline-block;
+    width:42px;
+    height:24px;
+    line-height:24px;
+    text-align:center;
+    text-align:center;
+}
+
+#table_windDirectionItems span.active{
+    background: rgb(222, 184, 135);
+}
+
+#table_windDirectionItems td{
+    padding:5px 0px 5px 0px;
+}
+
+#tableFiles{
+    height: 100%;
+    max-width: 10000%;
+    text-align: center;
+    font-size: 12px;
+    border-collapse:collapse;
+    font-family: Microsoft YaHei;
+    background-color: #FFFFFF;
+    border:rgb(216,216,216) solid 1px;
+}
+
+#tableFiles td{
+    width: 101px;
+    height: 21px;
+    border:rgb(200,200,200) solid 1px;
+    padding: 0px 1px;
+}
+#FXYBMainDiv{
+    overflow:auto;
+    position:relative;
+}
+#FXYBMainDiv tr{
+    height: 24px;
+}
+#FXYBMainDiv table,tr,td,th{
+    border:1px solid #ccd;
+    border-collapse:collapse;
+}
+#FXYBMainDiv table{
+    height: 100%;
+}
+#FXYBMainDiv th{
+    min-width: 85px;
+    max-width:86px;
+    width:200px;/** 不管是固定像素或是百分比，应与对应数据列的宽度一致 */
+    padding:0px 0px;
+    //word-break:break-all;
+    background-color:#cfc;
+    text-align: center;
+}
+#FXYBMainDiv td{
+    min-width: 85px;
+    max-width:86px;
+    width:200px;/** 不管是固定像素或是百分比，应与对应数据列的宽度一致 */
+    padding:0px 0px 0px 0px;
+    background-color:#ffffff;
+    text-align: center;
+}
+#FXYBLeftDiv{
+    position: absolute;
+    display: block;
+    left: 0px;
+    top: 24px;
+    width: 180px;
+    height:100%;
+    float: left;
+}
+#FXYBLeftTable td{
+    min-width: 85px;
+    max-width:86px;
+    padding:0px 0px 0px 0px;
+    background-color:#cfc;
+}
+#FXYBTopDiv{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 24px;
+    left: 0px;
+    top: 0px;
+    z-index: 9999;
+    background-color: #cfc;
+}
+#FXYBDataDiv{
+    margin-top: 24px;
+}
+#InitState{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    float: right;
+    margin: 8px 1px;
+    background-color: #808080;
+}
+#ShowBaoWen{
+    border: solid 1px rgb(150,160,200);
+    padding: 5px 0px;
+    border-radius: 3px;
+    cursor:pointer;
+    margin: 0px 0px 0px 10px;
+    font-size: 12px;
+    font-family: "Microsoft YaHei";
+    background:-webkit-gradient(linear, left top, left bottom, from(rgba(241,245,250, 1.0)), to(rgba(183, 203,231, 1.0)));
+    background: linear-gradient(to bottom,rgb(241,245,250) 0,rgb(183, 203,231) 100%);
+    box-shadow: 1px 1px 1px rgb(180,190,200);
+}
+#FXYBDataDiv table tr:nth-child(2n) td{
+    background: lightcyan;
+}
+#AreaDiv{
+    height: 40px;
+    width: 100%;
+    line-height: 40px;
+    border-bottom: 1px solid blueviolet;
+}
+#AreaDiv ul{
+    height: 100%;
+}
+#AreaDiv li{
+    list-style-type: none;
+    float:left;
+    height: 100%;
+    margin-left: 20px;
+    vertical-align: middle;
+    font-size: 18px;
+    line-height: 40px;
+}
+#AreaDiv li:hover{
+    cursor: pointer;
+}
+#AreaDiv li.active{
+    background-color: #0a67fb;
+}
+#ContentDiv{
+    position: absolute;
+    top: 40px;
+    width: 100%;
+    overflow: auto;
+}
+.CanvasDiv{
+    width: 100%;
+    height: 250px;
+    margin-top: 30px;
+}
+#div_level div{
+    display: none;
+}
+.dtData{
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+}
+.dtData tr{
+    height: 40px;
+}
+.dtData th{
+    text-align: center;
+}
+.areaPanel{
+     width: 220px;
+     height: 500px;
+     position: absolute;
+     z-index: 999;
+     right: 12px;
+     top: 38px;
+     display: none;
+ }
+.areaPanel div{
+    height: auto;
+    width: auto;
+}
+.areaPanel div div{
+    float: left;
+    font-size: 22px;
+}
+.tm{
+    background-color: grba(255,255,255,0);
+}
+#div_Depart{
+    font-size: 18px;
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+}
+#div_maptool{
+    width: 28px;
+    height:28px;
+    position: absolute;
+    top:70px;
+    left: 13px;
+    z-index: 1253;
+    background-image: url("../imgs/down.svg");
+    cursor: pointer;
+}

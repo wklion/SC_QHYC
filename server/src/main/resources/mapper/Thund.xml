@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IThundMapper"> 
+    <!-- 按in的方式过滤站点 -->
+    <select id="queryThundByRange" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, Lon, Lat, date_format(datetime, '%Y-%m-%d') as datetime, Thund
+    	from t_thund where datetime >= #{startTime} and datetime <= #{endTime}
+    	]]> 
+    </select>
+    
+    <select id="queryThundCntByRange" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select count(1) as count
+    	from t_thund where datetime >= #{startTime} and datetime <= #{endTime}
+    	]]> 
+    </select>
+    
+    <select id="queryThundBySameYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, Lon, Lat, year, date_format(datetime, '%Y-%m-%d') as datetime
+    	from t_thund where (date_format(datetime, '%m%d') >= #{startTime} and date_format(datetime, '%m%d') <= #{endTime}) 
+    	and year >= #{startYear} and year <= #{endYear} and Station_Id_C in
+    	]]>
+    	<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+    </select>
+    
+    <select id="queryThundByOverYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, Lon, Lat, year, date_format(datetime, '%Y-%m-%d') as datetime, date_format(datetime, '%m%d') as MMDD
+    	from t_thund where (date_format(datetime, '%m%d') >= #{startTime} or date_format(datetime, '%m%d') <= #{endTime}) 
+    	and year >= #{startYear} and year <= #{endYear} and Station_Id_C in
+    	]]> 
+    	<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+    </select>
+    
+</mapper> 

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IHailMapper"> 
+    
+    <select id="queryByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, a.Station_Name, date_format(a.datetime, '%Y-%m-%d') as datetime, a.startTime,
+    	 a.endTime, a.diameter, b.area from t_hail a left join t_station b 
+		on a.Station_Id_C = b.Station_Id_C
+		where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+		]]>
+    </select>
+    
+</mapper> 

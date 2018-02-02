@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>娓╁害鏌ヨ</title>
+ <script language="javascript" type="text/javascript" src="../../js/jquery.min.js"></script>
+<!-- 寮曞叆97timepicker -->
+ <script language="javascript" type="text/javascript" src="../../97timepicker/WdatePicker.js"></script>
+ <link rel="stylesheet" href="../../css/temperature.css" type="text/css" media="screen"/>
+ <!-- 寮曞叆bsgrid -->
+<link rel="stylesheet" href="../../bsgrid/builds/merged/bsgrid.all.min.css"/>
+<script type="text/javascript" src="../../bsgrid/builds/js/lang/grid.zh-CN.min.js"></script>
+<script type="text/javascript" src="../../bsgrid/builds/merged/bsgrid.all.min.js"></script>
+<!-- 寮曞叆weathermap -->
+ <script type="text/javascript" src='../../weathermap/libs/WeatherMap.Include.js'></script>
+ 
+ <!-- 寮曞叆highcharts -->
+ <script type="text/javascript" src='../../highcharts/highcharts.js'></script>
+ <script type="text/javascript" src="../../highcharts/modules/exporting.js"></script>
+ <link rel="stylesheet" href="../../css/bootstrap.min.css"/>
+  <script type="text/javascript">
+            //var host = document.location.toString().match(/file:\/\//)?"http://localhost:8090":'http://' + document.location.host;
+			var host = "http://support.supermap.com.cn:8090";
+            var map, layerWorld;
+            var url=host+"/iserver/services/map-world/rest/maps/World";
+			 
+			function init(){
+				//鍒濆鍖栧湴鍥炬嫋鎷芥帶浠剁被
+				dragPan = new WeatherMap.Control.DragPan(); 
+				//褰撹灞炴�涓簍rue锛屾嫋鎷藉湴鍥炬椂锛岄紶鏍囩Щ鍔ㄥ埌鍦板浘鍙鍖哄煙澶栦緷鐒舵湁鏁堛�榛樿涓篺alse
+				dragPan.documentDrag=true;
+				//璁剧疆鏄惁浣跨敤鎷栨嫿鍔ㄧ敾銆傞粯璁や负false锛屼笉浣跨敤鍔ㄧ敾
+				dragPan.enableKinetic=true;
+				//鎵ц鍔ㄧ敾鐨勯棿闅旓紝榛樿涓�0锛屽崟浣嶆槸姣
+				dragPan.kineticInterval=20;
+				//鍒濆鍖栧湴鍥剧被锛屾坊鍔犲湴鍥炬嫋鎷芥帶浠跺埌Map
+                map = new WeatherMap.Map("map",{controls: [   
+					dragPan]
+                });
+				
+				layerWorld = new WeatherMap.Layer.TiledDynamicRESTLayer("World", url);  //鑾峰彇鍥惧眰鏈嶅姟鍦板潃
+				layerWorld.events.on({"layerInitialized": addLayer});
+			}
+			
+			//娣诲姞鍦板浘鍥惧眰鍒癿ap
+			function addLayer(){
+                map.addLayers([layerWorld]);
+                map.setCenter(new WeatherMap.LonLat(105, 30), 12);
+            }
+	
+			
+			</script>
+
+</head>
+<body onload="init()">
+
+   
+  <div id="searchArea" class="searchArea">
+  
+   
+  
+	 <div id="yaosu" style="float:left;">   
+	    鐜祦鍥犲瓙(鑷彉閲�</br>
+	      <div id="hlyz" style="margin-left:20px;margin-top:10px;"> 
+		      <div>鏂瑰紡:&nbsp;&nbsp;<input type="radio">鍘熷�&nbsp;&nbsp; <input type="radio">鍙樺寲&nbsp;&nbsp;鍥犲瓙鏉ユ簮:<select><option>NCC</option></select></div></br>
+		      
+		      <div>鍥犲瓙鏃堕棿锛�nbsp;&nbsp;<input type="radio">鏍囧噯&nbsp; <input type="radio">鎻愬墠&nbsp;<select><option>涓�釜鏈�/option></select></div></br>
+		      
+		      <div>鍥犲瓙閫夋嫨锛�select><option>瑗垮お骞抽槼鍓己楂樺害</option></select></div>   
+		       
+	      </div>
+	  </div>
+	  <div id="shiduan" style="float:left;margin-top:50px;">
+	     棰勬祴鏃舵</br>
+	       <div id="time" style="margin-left:20px;margin-top:10px;">
+	          <div>寮�:<input id="dataStart" style="width:50px;" type="number" value="1"/>鏈�nbsp;<input id="dataStart" style="width:50px;" type="number" value="1"/>鏃�/div></br>
+	          <div>缁撴潫:<input id="dataStart" style="width:50px;" type="number" value="1"/>鏈�nbsp;<input id="dataStart" style="width:50px;" type="number" value="31"/>鏃�/div></br>
+              <div><select size="1"></select>瀛�nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select size="1"><option>1</option></select>鏈�nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select size="1"></select>鏃�/div></br>
+              <div>鐩稿叧鏃舵锛�input type="number" style="width:50px;" value="1981">鑷�input type="number" style="width:50px;" value="2016">棰勬祴锛�input type="number" style="width:45px;" value="2017"></div>
+	        
+	       </div>
+	  
+	  </div>    
+	  
+	  <div id="xianshi" style="float:left;margin-top:50px;">
+	     鏄剧ず</br>
+	    <div id="compare" style="margin-left:20px;margin-top:10px;">
+	       <div>鍏ㄥ競锛�select><option>鍏ㄥ競</option></select>&nbsp;&nbsp;&nbsp;&nbsp;<input type="number" style="width:60px;" value="0"></div>
+	    
+	    </div>
+	  </div>
+	  
+	   <div id="shaixuan" style="float:left;margin-top:50px;">
+	     绛涢�</br>
+	    <div id="compare" style="margin-left:20px;margin-top:10px;">
+	       <div><select><option>闄愬埗鍥犲瓙鏁�/option></select> <a class='btn btn-primary' href='javascript:;'>璁＄畻</a></div>
+	    
+	    </div>
+	  </div>
+	  
+	  <div style="float:left;margin-left:50px;margin-top:100px;">
+	    
+	     
+	  </div>
+  </div>   
+  
+   
+  
+  <div id="mainContent" class="mainContent">
+   <div id="centerContent" style="height:350px;">
+       <div style="margin-top:5px;margin-left:5px;"><a class='btn btn-success' href='javascript:;'>瀵煎嚭琛ㄦ牸</a>&nbsp;&nbsp;&nbsp;<a class='btn btn-success' href='javascript:;'>鍥剧墖淇濆瓨</a></div>
+       <div style="margin-top:5px;">
+	   <div  id="grid" style="float:left;width:500px;height:450px;"> 
+			 <dl>
+	          <dd class="title">绔欏彿</dd><dd class="title">鍚嶇О</dd><dd class="title">鏈�/dd><dd class="title">姘旀俯鐩稿叧</dd><dd class="title">姘旀俯鍚屾鐜�/dd>
+	          <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>  
+	          <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>  
+	          <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>  
+	          <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	           <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	           <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	           <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	           <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	           <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	           <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	            <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	            <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	            <dt></dt>
+	          <dd>1</dd>  <dd>1</dd>  <dd>1</dd> <dd>1</dd>
+	         </dl>
+	   
+	   </div>
+	   
+	   <div id="map" style="float:left;width:680px;height:432px;">
+	   </div>
+	   </div>
+   </div>
+   <div> 
+     <div id="container" style="min-width:500px;height:250px"></div>
+     
+   </div>
+  </div>
+  
+  
+  
+  
+  
+ 
+    <script type="text/javascript">
+    
+    $(document).ready(function () {
+    	
+    	//榛樿閫夊畾骞冲潎娓╁害涓烘潯浠�
+    	$("#avg").addClass("elementSelect");
+    	$("#myavg").addClass("elementSelect");
+    	$(".e").bind("click",function(){
+    		$(".e").removeClass("elementSelect");
+    	    $(this).addClass("elementSelect");
+    	});
+    	});
+    
+
+        // 鍒濆鍖�highcharts
+        
+      $(function () {
+    $('#container').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: '鍏抽敭鍥犲瓙鍜屾椂娈�
+        },
+        xAxis: {
+            categories: ['瑗胯棌楂樺師_N', '瑗胯棌楂樺師_S', '瑗胯棌楂樺師_F', '瑗胯棌楂樺師_G', '瑗胯棌楂樺師_D']
+        },
+        credits: {
+            enabled: false
+        },
+        series: [{
+            name: '',
+            data: [5, 3, 4, 7, 2]
+        }, {
+            name: '',
+            data: [2, -2, -3, 2, 1]
+        }, {
+            name: '',
+            data: [3, 4, 4, -2, 5]
+        }]
+    });
+});
+        
+    </script>
+</body>
+</html>

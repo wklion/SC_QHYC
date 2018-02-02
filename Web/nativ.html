@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/login.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <title>入口导航</title>
+    <script type="text/javascript">
+            $(function(){
+                $("#div_ysq").click(function() {//延伸期
+                    window.location.href = "land.html";
+                });
+                $("#div_njy").click(function() {//年季月预测
+                    window.location.href = "njy.html";
+                });
+                $("#div_xtpz").click(function() {//系统配置
+                    window.location.href = "manage.html";
+                });
+                $("#div_zdfx").click(function() {//诊断分析
+                    var host = "http://"+window.location.host;
+                    window.location.href = host+"/CIMAS";
+                });
+            });
+    </script>
+</head>
+<body style="height: 100%;margin: 0px;overflow: hidden;font-family: Microsoft YaHei;">
+    <div class="loginBackground">
+        <img src="imgs/login/bodyBackground.png" width="100%" height="100%" style="margin:0px;z-index: -1;height: inherit;background-image: linear-gradient(to bottom, #83c3ff 0px, #007df1 100%)">
+    </div>
+    <div class="loginBackground">
+        <img src="imgs/img_banner_titlie.png" style="position: absolute;left: 50%;margin-left: -340px;top: 10%;">
+        <div style="position: absolute;width: 1150px;left:calc(50% - 570px);top: 25%;margin-top: 0px;">
+            <div class="menuDiv" id="div_tzxx" style="height: 564px;width: 360px;float: left;background: #5da746">
+                <div style="padding: 24px 30px; color: #FFFFFF; font-size: 16px;">通知:</div>
+                <div style="height: 369px;width: 360px;padding: 0 59px; color: #FFFFFF; font-size: 16px;">
+                </div>
+            </div>
+            <div class="menuDiv" id="div_ysq" style="height: 180px;width: 360px;float: left;cursor: pointer;">
+                <img src="imgs/login/div_ysq.png">
+            </div>
+            <div class="menuDiv" id="div_njy" style="height: 180px;width: 360px;float: left;cursor: pointer;">
+                <img src="imgs/login/div_njy.png">
+            </div>
+            <div class="menuDiv" id="div_zdfx" style="height: 180px;width: 360px;float: left;cursor: pointer;">
+                <img src="imgs/login/div_zdfx.png">
+            </div>
+            <div class="menuDiv" id="div_cjwt" style="height: 180px;width: 176px;float: left;cursor: pointer;">
+                <img src="imgs/login/div_cjwt.png">
+            </div>
+            <div class="menuDiv" id="div_tjllq" style="height: 180px;width: 176px;float: left;cursor: pointer;">
+                <img src="imgs/login/div_tjllq.png">
+            </div>
+            <div class="menuDiv" id="div_xtpz" style="height: 180px;width: 360px;float: left;cursor: pointer;">
+                <img src="imgs/login/div_xtpz.png">
+            </div>
+        </div>
+        <div id="div_foot">Copyright (c) 2016 四川气候中心&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;技术支持：北京思湃德信息技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QQ交流群：297435059</div>
+    </div>
+</body>
+</html>

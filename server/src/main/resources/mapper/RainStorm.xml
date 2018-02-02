@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IRainStormMapper"> 
+    
+    <select id="queryRainStormByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   	 <![CDATA[
+    	select a.Station_Id_C, a.Station_Name, date_format(a.datetime, '%Y-%m-%d') as datetime, a.Pre, b.area from ${tableName} a
+    	left join t_station b on a.Station_Id_C = b.Station_Id_C
+		where a.datetime >= #{startTime} and a.datetime <= #{endTime} and a.Pre >= #{level1}  
+		and a.station_id_C like #{station_Id_C}
+		order by a.datetime, a.station_Id_c
+		]]>
+    </select>
+    
+    <select id="queryRainStormByTimesAndStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   	 <![CDATA[
+    	select a.Station_Id_C, a.Station_Name, date_format(a.datetime, '%Y-%m-%d') as datetime, a.Pre, b.area from ${tableName} a
+    	left join t_station b on a.Station_Id_C = b.Station_Id_C
+		where a.datetime >= #{startTime} and a.datetime <= #{endTime} and a.Pre >= #{level1}  and a.station_Id_C in 
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		order by a.datetime, a.station_Id_c
+    </select>
+    
+    
+     <select id="queryRainStormByOverYearAndStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select Station_Id_C, Station_Name, date_format(datetime, '%Y-%m-%d') as datetime, date_format(datetime, '%m%d') as MMDD, year, Pre from ${tableName}
+		where (date_format(datetime, '%m%d') >= #{startTime} or date_format(datetime, '%m%d') <= #{endTime}) and Pre >= #{level1}  and year >= #{startYear}
+		and year <= #{endYear} and station_Id_C in 
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		order by datetime, station_Id_c
+    </select>
+    
+    <select id="queryRainStormBySameYearAndStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select Station_Id_C, Station_Name, date_format(datetime, '%Y-%m-%d') as datetime, date_format(datetime, '%m%d') as MMDD, year, Pre from ${tableName}
+		where (date_format(datetime, '%m%d') >= #{startTime} and date_format(datetime, '%m%d') <= #{endTime}) and Pre >= #{level1} 	and year >= #{startYear}
+		and year <= #{endYear} and station_Id_C in 
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		order by datetime, station_Id_c
+    </select>
+    
+    <select id="rainstormByRange" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+	    	select avg(pre) as pre, date_format(datetime, '%Y-%m-%d') as datetime, count(1) as cnt from t_rainstorm2020
+			where pre >= #{minDayPre} and datetime >= #{startTime} and datetime <= #{endTime} and station_id_C like '5%'
+			group by datetime
+			having count(1) > #{minDayStations}
+		]]>
+    </select>
+    
+    <select id="queryRainStormStationsByTime" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+	    	select Station_Id_C, date_format(datetime, '%Y-%m-%d') as datetime from t_rainstorm2020 where datetime = #{datetime} and pre >= #{minDayPre} and station_id_C like '5%'
+		]]>
+    </select>
+    
+    <select id="queryRainStormByTimeAndStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+	    	select Station_Id_C, date_format(datetime, '%Y-%m-%d') as datetime, Pre from t_rainstorm2020 where datetime >= #{startTime} and datetime <= #{endTime} and pre >= #{minDayPre}
+			and  station_id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		 order by datetime
+    </select>
+    <select id="queryStatisticsRainStormByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+	    	select count(1) as stationCnt, sum(Pre) as sumPre from t_rainstorm2020 where datetime >= #{startTime} and datetime <= #{endTime} and pre >= 50 and station_Id_C like '5%'
+		]]>
+    </select>
+</mapper> 

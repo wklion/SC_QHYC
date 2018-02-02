@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.ITmpGapMapper"> 
+    <!-- 这里的id必须和IStatisticsMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+    <select id="getLowTmpByTimes" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Name, Province, Station_Id_C, Station_Id_d,
+    	Lat, Lon, Alti, year,
+    	${items} from t_tem_min where  year >= #{startYear} and year <= #{endYear}
+		]]>
+		<if test="StationType == 'AWS'">
+			and Station_Id_C like '5%'
+		</if>
+    </select>
+    <select id="getMaxTmpByTimes" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Name, Province, Station_Id_C, Station_Id_d,
+    	Lat, Lon, Alti, year,
+    	${items} from ${tableName} where  year >= #{startYear} and year <= #{endYear}
+		]]>
+		<if test="StationType == 'AWS'">
+			and Station_Id_C like '5%'
+		</if>
+    </select>
+    <select id="getGapTmpByTimes" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Name, Province, Station_Id_C, Station_Id_d,
+    	Lat, Lon, Alti, year,
+    	${items} from v_tem_gap where  year >= #{startYear} and year <= #{endYear}
+		]]>
+		<if test="StationType == 'AWS'">
+			and Station_Id_C like '5%'
+		</if>
+    </select>
+    <select id="getGapTmpByYears" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Name, Province, Station_Id_C, Station_Id_d,
+    	Lat, Lon, Alti, year,
+    	${items} from v_tem_gap where  year >= #{startYear} and year <= #{endYear}
+		]]>
+		<if test="StationType == 'AWS'">
+			and Station_Id_C like '5%'
+		</if>
+    </select>
+    <select id="getTmpByYear" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select d.maxMonth, d.minMonth, d.maxAvgTmp, d.minAvgTmp, d.year, d.Station_Id_C, e.Station_Name from 
+		(
+			select a.month as maxMonth, b.month as minMonth, c.maxAvgTmp, c.minAvgTmp, c.year, c.Station_Id_C from t_MonthAvgTmp a, t_MonthAvgTmp b, 
+			(
+				select max(avgTmp) as maxAvgTmp, min(avgTmp) as minAvgTmp, year, Station_Id_C from t_MonthAvgTmp d
+				 where year = #{year} 
+	 ]]>
+		 <if test="StationType == 'AWS'">
+			and Station_Id_C like '5%'
+		</if>
+	<![CDATA[
+			group by station_Id_C 
+			) c where a.Station_Id_C = c.Station_Id_C and a.year = c.year and a.avgTmp = c.maxAvgTmp 
+			and b.Station_Id_C = c.Station_Id_C and b.year = c.year and b.avgTmp = c.minAvgTmp 
+		) d left join t_station e on d.station_Id_C = e.Station_Id_C and (e.seq is not null or e.Station_Id_C like 'A%')
+		order by e.seq, d.minMonth, d.maxMonth
+	]]>
+    </select>
+    
+    <select id="getTmpGapByYears" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select avg(tmpGap) as value, year from 
+		(
+			select max(avgTmp) as maxAvgTmp, min(avgTmp) as minAvgTmp, max(avgTmp) - min(avgTmp) as tmpGap, year, Station_Id_C from t_MonthAvgTmp d
+				 where year >= #{startYear} and year <= #{endYear}
+			and Station_Id_C like #{Station_Id_C}
+			group by station_Id_C, year 
+		) a group by year
+	]]>
+    </select>
+    
+    <select id="getAvgTmpGapByYears" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select avg(tmpGap) as value from 
+		(
+			select max(avgTmp) as maxAvgTmp, min(avgTmp) as minAvgTmp, max(avgTmp) - min(avgTmp) as tmpGap, year, Station_Id_C from t_MonthAvgTmp d
+				 where year >= #{startYear} and year <= #{endYear}
+			and Station_Id_C like #{Station_Id_C}
+			group by station_Id_C, year 
+		) a
+		]]>
+    </select>
+    
+</mapper> 

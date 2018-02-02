@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 平均气温结果定义, 时段 -->
+	<bean id="avgTmpDescRange" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,tEM_Avg,contrastTMP_Avg,anomaly"></property>
+		<property name="gisShowItems" value="tEM_Avg,contrastTMP_Avg,anomaly"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'平均气温', name:'tEM_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'时段值', name:'contrastTMP_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 平均气温结果定义, 多年均值 -->
+	<bean id="avgTmpDescYears" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,tEM_Avg,contrastTMP_Avg,anomaly"></property>
+		<property name="gisShowItems" value="tEM_Avg,contrastTMP_Avg,anomaly"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'平均气温', name:'tEM_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'多年均值', name:'contrastTMP_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 最高气温结果定义 ， 时段值-->
+	<bean id="maxTmpDescRange" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,tEM_Max,contrastTEM_Max,anomaly"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'高温均值', name:'tEM_Max', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'时段值', name:'contrastTEM_Max', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 最高气温结果定义 ，多年均值-->
+	<bean id="maxTmpDescYears" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,tEM_Max,contrastTEM_Max,anomaly"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'高温均值', name:'tEM_Max', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'多年均值', name:'contrastTEM_Max', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 最低气温结果定义 ， 时段值-->
+	<bean id="minTmpDescRange" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,tEM_Min,contrastTEM_Min,anomaly"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'低温均值', name:'tEM_Min', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'时段值', name:'contrastTEM_Min', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 最低气温结果定义 ，多年均值-->
+	<bean id="minTmpDescYears" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,tEM_Min,contrastTEM_Min,anomaly"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'低温均值', name:'tEM_Min', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'多年均值', name:'contrastTEM_Min', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 降水总量，时段值 -->
+	<bean id="preSumDescRange" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,pRE_Time,contrastPRE_Time,anomaly,anomalyRate"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'降水总量', name:'pRE_Time', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'时段值', name:'contrastPRE_Time', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平率', name:'anomalyRate', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+		</bean>
+		<!-- 降水总量，多年均值 -->
+	<bean id="preSumDescYears" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,pRE_Time,contrastPRE_Time,anomaly,anomalyRate"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'降水总量', name:'pRE_Time', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'多年均值', name:'contrastPRE_Time', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平率', name:'anomalyRate', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 相对湿度，时段值 -->
+	<bean id="rHURange" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,rHU_Avg,contrastRHU_Avg,anomaly,anomalyRate"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'相对湿度', name:'rHU_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'时段值', name:'contrastRHU_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+		</bean>
+		<!-- 相对湿度，多年均值 -->
+	<bean id="rHUYears" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,rHU_Avg,contrastRHU_Avg,anomaly,anomalyRate"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'降水总量', name:'rHU_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'多年均值', name:'contrastRHU_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+	
+	<!-- 平均风速，时段值 -->
+	<bean id="Win_s_2mi_avgRange" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,wIN_S_2mi_Avg,contrastWIN_S_2mi_Avg,anomaly,anomalyRate"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'平均风速', name:'wIN_S_2mi_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'时段值', name:'contrastWIN_S_2mi_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+		</bean>
+	<!-- 平均风速，多年均值 -->
+	<bean id="Win_s_2mi_avgYears" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,wIN_S_2mi_Avg,contrastWIN_S_2mi_Avg,anomaly,anomalyRate"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'平均风速', name:'wIN_S_2mi_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'多年均值', name:'contrastWIN_S_2mi_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 平均气压，时段值 -->
+	<bean id="prsAvgRange" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,pRS_Avg,contrastPRS_Avg,anomaly"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'平均气压', name:'pRS_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'时段值', name:'contrastPRS_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+		</bean>
+	<!-- 平均气压，多年均值 -->
+	<bean id="prsAvgYears" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,pRS_Avg,contrastPRS_Avg,anomaly"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'平均气压', name:'pRS_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'多年均值', name:'contrastPRS_Avg', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 极端气温 -->
+	<bean id="extTmp" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,tEM_Min,tEM_Min_OTime,tEM_Max,tEM_Max_OTime"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'极端高温', name:'tEM_Max', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'高温日期', name:'tEM_Max_OTime', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'极端低温', name:'tEM_Min', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'低温日期', name:'tEM_Min_OTime', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 降水日数，时段值 -->
+	<bean id="preCntDescRange" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,cnt,contrastCnt,get25lt50cnt,get50lt100cnt,get100,anomaly"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'降水日数', name:'cnt', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'时段值', name:'contrastCnt', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'25.0~49.9', name:'get25lt50cnt', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'50.0~99.9', name:'get50lt100cnt', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'>=100.0', name:'get100', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+		</bean>
+	<!-- 降水日数，多年均值 -->
+	<bean id="preCntDescYears" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,cnt,contrastCnt,get25lt50cnt,get50lt100cnt,get100,anomaly"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'降水日数', name:'cnt', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'多年均值', name:'contrastCnt', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'25.0~49.9', name:'get25lt50cnt', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'50.0~99.9', name:'get50lt100cnt', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'>=100.0', name:'get100', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 高温日数 -->
+	<bean id="tmpMax" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,gte35,gte35lt37,gte37,gte37lt40,gte40"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'>=35°', name:'gte35', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'35°~36.9°', name:'gte35lt37', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'>=37°', name:'gte37', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'37~39.9°', name:'gte37lt40', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'>=40°', name:'gte40', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 日照对数，时段值 -->
+	<bean id="sshRange" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,sSH,contrastSSH,anomaly,anomalyRate,sshRate"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'日照对数', name:'sSH', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'时段值', name:'contrastSSH', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平率', name:'anomalyRate', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'日照百分率', name:'sshRate', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+		</bean>
+	<!-- 日照对数，多年均值 -->
+	<bean id="sshYears" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,sSH,contrastSSH,anomaly,anomalyRate,sshRate"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'日照对数', name:'sSH', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'多年均值', name:'contrastSSH', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平', name:'anomaly', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'距平率', name:'anomalyRate', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'日照百分率', name:'sshRate', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 能见度低值 -->
+	<bean id="visMin" class="com.spd.pojo.ResultDesc">
+		<property name="tableShowItems" value="station_Id_C,station_Name,area,vIS_Min,vIS_Min_OTime"></property>
+		<property name="gisShowItems" value="station_Id_C,station_Name,lon,lat"></property>
+		<property name="itemDescription">
+			<list>
+				<value>{ title:'站号', name:'station_Id_C', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'站名', name:'station_Name', sortable: true, align:'center'}</value>
+				<value>{ title:'地区', name:'area', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'最低能见度', name:'vIS_Min', sortable: true, type: 'number', align:'center'}</value>
+				<value>{ title:'出现时间', name:'vIS_Min_OTime', sortable: true, type: 'number', align:'center'}</value>
+			</list>
+		</property>
+	</bean>
+	
+</beans>

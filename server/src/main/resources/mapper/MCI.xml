@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IMCIMapper"> 
+    
+    <select id="queryMCIByTime" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.station_Id_C, b.station_Name, a.RT_SPIW60, a.RT_MI, a.RT_SPI90, a.RT_SPI150, a.MCI from t_MCI a
+    	left join t_station b on a.station_Id_C = b.station_Id_C
+    	where a.datetime = #{datetime} 
+		]]>
+    </select>
+    
+    <select id="mciStatisticsByTime" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select MCI, date_format(datetime, '%Y-%m-%d') as datetime from t_mci  where datetime >= #{startTime} and datetime <= #{endTime} 
+		]]>
+    </select>
+    
+    <select id="mciStatisticsByTimeAndStation" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select MCI, date_format(datetime, '%Y-%m-%d') as datetime from t_mci  where datetime >= #{startTime} and datetime <= #{endTime} and
+	    	station_id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+	           #{item}  
+		</foreach>	
+    </select>
+    
+    <select id="agmesoilStatisticsByTime" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, date_format(Datetime, '%Y-%m-%d') as Datetime,
+    	Soil_Depth_BelS, SVWC, SRHU, SWWC, SVMS
+    	 from t_agmesoil  where Datetime = #{datetime}
+		]]>
+    </select>
+     
+</mapper> 

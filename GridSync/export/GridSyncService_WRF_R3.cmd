@@ -1,0 +1,1 @@
+java -cp .;GridSyncService.jar com.spd.grid.GridSync WRF R3 1000F:/Work/SPD/Micaps_Data/wrf_5km/Rain3/999

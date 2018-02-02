@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IFrostMapper"> 
+    
+    <select id="queryFrostByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, a.Station_Name, date_format(a.datetime, '%Y-%m-%d') as datetime, a.TEM_Min from t_min_tmp a
+		where a.datetime >= #{startTime} and a.datetime <= #{endTime} and a.TEM_Min <= #{TEM_Min} 
+		]]>
+		<if test="StationType == 'AWS'">
+		and a.Station_Id_C like '5%'
+		</if>
+		 order by a.datetime
+    </select>
+    
+    <select id="queryFrostByRangesAndStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, a.Station_Name, date_format(a.datetime, '%Y-%m-%d') as datetime, a.TEM_Min, b.area from t_min_tmp a
+    	left join t_station b on a.Station_Id_C = b.Station_Id_C
+		where a.datetime >= #{startTime} and a.datetime <= #{endTime} and a.TEM_Min <= #{TEM_Min}
+		and a.Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		 order by a.datetime
+    </select>
+    
+    
+    <select id="queryFrostBySameYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C, Station_Name, date_format(datetime, '%Y-%m-%d') as datetime, TEM_Min, date_format(datetime, '%m%d') as MMDD, year from t_min_tmp
+			where (date_format(datetime, '%m%d') >= #{startTime} and date_format(datetime, '%m%d') <= #{endTime})
+	    	and year >= #{startYear} and year <= #{endYear} and TEM_Min <= #{TEM_Min}
+			and Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		 order by datetime
+    </select>
+    
+    <select id="queryFrostByOverYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	   <![CDATA[
+	    	select Station_Id_C, Station_Name, date_format(datetime, '%Y-%m-%d') as datetime, TEM_Min, date_format(datetime, '%m%d') as MMDD, year from t_min_tmp
+			where (date_format(datetime, '%m%d') >= #{startTime} or date_format(datetime, '%m%d') <= #{endTime})
+	    	and year >= #{startYear} and year <= #{endYear} and TEM_Min <= #{TEM_Min}
+			and Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+		 order by datetime
+    </select>
+    
+</mapper> 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+        <!-- jquery start-->
+        <!-- <link rel="stylesheet" href="css/jquery-ui.min-v1.12.0.css"> -->
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/config/config.js"></script>
+        <!-- jquery end-->
+        <!--bootstrap start-->
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <!--bootstrap end-->
+        <script type="text/javascript" src="js/Controls/highcharts.js"></script>
+        <script type="text/javascript">
+            $(function(){
+                $("#temp").bind("click",function(){
+                    GetJuPingData();
+                });
+            });
+            var baseUrl="http://127.0.0.1:8080/WMGridService/";
+            function GetJuPingData(){
+                $.ajax({
+                    type: 'post',
+                    url: baseUrl + "services/jcd/GetData",
+                    data: {'para': ''},
+                    dataType: 'json',
+                    error: function (e) {
+                        alert('获取区域ZSCS出错!');
+                    },
+                    success: function (data)
+                    {
+                        var labels=["m1","m2","m3","m4","m5","m6","m7","m8","m9","m10","m11","m12"];
+                        ViewData(labels,data);
+                    }
+                });
+            }
+            function ViewData(labels,data){
+                var chart=new Highcharts.Chart({
+                    chart: {
+                        renderTo:'chart',
+                        type: 'spline'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: labels,
+                    },
+                    tooltip: {
+                        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                        pointFormat: '<tr><td style="color:{series.color};padding:0"></td>' 
+                        +'<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
+                        footerFormat: '</table>',
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        spline: {
+                            dataLabels: {
+                                enabled: true
+                            },
+                        }
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: "历史温度",
+                        data:data
+                    }]
+                });
+            }
+        </script>
+
+</head>
+<body style="position: absolute;left: 0px;bottom: 0px;width: 100%;height: 100%;">
+    <div class="container-fluid" style="height: 100%;">
+        <div id="top" style="height: 15%;background-color: #F6F2F2"></div>
+        <div id="workspace" style="height: 85%;">
+            <div id="left" style="width: 20%;height:100%;background-color: #F6F2F2" class="pull-left">
+                <div id="element">
+                    <h3>要素</h3>
+                    <div><button class="btn btn-default" id="temp">气温</button><button class="btn btn-default" id="rain">降水</button></div>
+                </div>
+            </div>
+            <div id="right" style="width: 80%;height:100%;" class="pull-left">
+                <div id="chart" style="width: 100%;height:100%;"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

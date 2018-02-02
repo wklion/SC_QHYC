@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="WMGridService"
+  id="myeclipse.1441677480473"
+  context-root="/WMGridService"
+  j2ee-spec="5.0"
+  archive="WMGridService.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

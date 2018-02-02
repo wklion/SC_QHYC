@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IMaxWindMapper"> 
+    <select id="queryMaxWindByRanges" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, a.Station_Name, a.WIN_S_Inst_Max, a.WIN_D_INST_Max, a.year, a.Datetime, a.Level, b.area
+    	from t_win_inst_max a left join t_station b on a.Station_Id_C = b.Station_Id_C
+    	where a.Datetime >= #{startTime} and a.Datetime <= #{endTime}
+		]]>
+    </select>
+    
+    <select id="queryMaxWindBySameYear" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, WIN_S_Inst_Max, WIN_D_INST_Max, year, Datetime, Level, date_format(datetime, '%m%d') as MMDD
+    	from t_win_inst_max where date_format(datetime, '%m%d') >= #{startTime} and date_format(datetime, '%m%d') <= #{endTime}
+    	and year >= #{startYear} and year <= #{endYear}
+    	and Station_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+    </select>
+    
+    <select id="queryMaxWindByOverYear" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, WIN_S_Inst_Max, WIN_D_INST_Max, year, Datetime, Level, date_format(datetime, '%m%d') as MMDD
+    	from t_win_inst_max where date_format(datetime, '%m%d') >= #{startTime} or date_format(datetime, '%m%d') <= #{endTime}
+		and year >= #{startYear} and year <= #{endYear}
+		and Station_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+    </select>
+</mapper> 

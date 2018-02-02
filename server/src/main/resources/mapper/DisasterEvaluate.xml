@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IDisasterEvaluateMapper"> 
+    <!-- 这里的id必须和IStatisticsMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+    <select id="areaHighTmpSiByRange" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+  	  <![CDATA[
+    	select Station_Id_C, date_format(StartTime, '%Y-%m-%d') as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime, si, level from t_areahightmpsi 
+    	where StartTime >= #{StartTime} and EndTime <= #{EndTime} and station_id_C like '5%'
+		]]>
+    </select>
+    
+    <select id="areaHighAreaResultSiByRange" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d') as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime, persistDays, RI, level from t_areahigharearesult where StartTime >= #{StartTime} and EndTime <= #{EndTime}
+		]]>
+    </select>
+    
+     <select id="areaHighAreaResultByYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d') as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime, date_format(EndTime, '%Y') as year,
+    	persistDays, RI from t_areahigharearesult
+    	where date_format(StartTime, '%m%d') >= ${startMMDD} and date_format(EndTime, '%m%d') <= ${endMMDD}
+    	and date_format(EndTime, '%Y') >= #{startYear} and date_format(EndTime, '%Y') <= #{endYear}
+    	order by StartTime
+		]]>
+    </select>
+    
+    <select id="YHIareaHighTmpYearResult" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select YHI from t_areahightmpyearresult order by YHI
+		]]>
+    </select>
+    
+    <select id="autumnRains" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select year, date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime,
+    	LengthIndexI, Pre, PreIndex, IntensityIndex from t_autumnrains order by year
+		]]>
+    </select>
+    
+    <select id="autumnTimesRangeByYear" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select year, date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime,
+    	LengthIndexI  from t_autumnrains where year = #{year}
+		]]>
+    </select>
+    
+    <select id="autumnRainsByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(Datetime, '%Y-%m-%d') as datetimes, sum(pre) as sum, count(1) as cnt from t_rainstorm2020 where datetime >= #{startTime} and datetime <= #{endTime} and station_id_C like '5%' and Pre >= 0.1
+		group by datetime order by Datetime
+		]]>
+    </select>
+    
+    <select id="autumnRainsByYear" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select year, ${items} from t_pre_time_2020 where year = #{year} and station_id_C like '5%'
+		]]>
+    </select>
+    
+     <select id="autumnSeqRangeByYear" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select year, date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime from t_autumnrainsseq where year = #{year}
+		]]>
+    </select>
+    
+    <select id="mciStationByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select Station_Id_C, date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime, SumStrength,
+    	SingleStrength, SingleSynthStrength, StrengthLevel,(SumStrength - (${avg})) /  (${std}) as std 
+    	from t_mcistation where (StartTime >= #{startTime} and StartTime <= #{endTime})
+    	or (EndTime >= #{startTime} and EndTime <= #{endTime})
+    	order by std
+		]]>
+    </select>
+    
+    <select id="mciSumStrength" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select avg(SumStrength) as avg, sum(SumStrength) as sum, std(SumStrength) as std  from t_mcistation
+		]]>
+    </select>
+    
+    <select id="mciStdStrength" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select station_Id_C, startTime, endTime, SumStrength, (SumStrength + ${sum}) /  ${std} as aa from t_mcistation order by aa desc
+		]]>
+    </select>
+    
+    <select id="mciStationByYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(starttime, '%Y') as year, sum(SumStrength) as sum from t_mcistation
+    	where date_format(starttime, '%Y') >= #{startYear} and date_format(starttime, '%Y') <= #{endYear}
+    	group by date_format(starttime, '%Y') order by sum 
+		]]>
+    </select>
+    
+    <select id="mciAreaByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select year, date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime, StationCnts,  SumStrength
+    	from t_mciarea where (StartTime >= #{startTime} and StartTime <= #{endTime})
+    	or (EndTime >= #{startTime} and EndTime <= #{endTime})
+    	order by SumStrength 
+		]]>
+    </select>
+    
+    <select id="mciAreaByYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(starttime, '%Y') as year, sum(SumStrength) as sum from t_mciarea 
+    	where date_format(starttime, '%Y') >= #{startYear} and date_format(starttime, '%Y') <= #{endYear}
+    	group by date_format(starttime, '%Y')
+    	order by sum
+		]]>
+    </select>
+    <select id="areaStormByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+	    	select Station_Id_C, date_format(datetime, '%Y-%m-%d')as datetime, type, extPre from t_rainstormarea
+	    	where datetime >= #{startTime} and datetime <= #{endTime} and type = #{type}  
+		]]>
+		<if test="type == 'PRE'">
+			and Station_Id_C like '5%'
+		</if>
+		order by datetime, type
+    </select>
+    
+    <select id="areaStormByTime" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select Station_Id_C, date_format(datetime, '%Y-%m-%d')as datetime, type, extPre from t_rainstormarea
+    	where datetime = #{datetime} and type = #{type}
+		]]>
+    </select>
+    
+    <select id="areaStormStatisticsByTime" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select count(1) as stationCnt, sum(extPre) as sumPre from t_rainstormarea where 
+    	datetime >= #{startTime} and datetime <= #{endTime}  and station_id_C like '5%' and type = 'PRE'
+		]]>
+    </select>
+    
+    <select id="continueRainStatiionByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select Station_Id_C, date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime,
+    	NoSunDays, RainDays, Pre  from t_continuousrainsstation where
+    	(StartTime >= #{startTime} and StartTime <= #{endTime}) or (EndTime >= #{startTime} and EndTime <= #{endTime})
+		]]>
+    </select>
+    <!-- add -->
+    <select id="continueRainStatiionByYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select Station_Id_C, date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime,
+    	NoSunDays, RainDays, Pre  from t_continuousrainsstation where
+    	(date_format(StartTime, '%m%d') >= #{startTime} and date_format(StartTime, '%m%d') <= #{endTime}) 
+    	or
+    	 (date_format(EndTime, '%m%d') >= #{startTime} and date_format(EndTime, '%m%d') <= #{endTime})
+		]]>
+    </select>
+    
+    
+    <select id="continueRainAreaByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime,PreDays,ProcessDays,
+    	SumStations,SumPre from t_continuerainarea where 
+    	(StartTime >= #{startTime} and StartTime <= #{endTime}) or (EndTime >= #{startTime} and EndTime <= #{endTime})
+		]]>
+    </select>
+    <!-- add -->
+    <select id="continueRainAreaByYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime,PreDays,ProcessDays,
+    	SumStations,SumPre from t_continuerainarea where 
+    	(date_format(StartTime, '%m%d') >= #{startTime} and date_format(StartTime, '%m%d') <= #{endTime}) 
+    	or 
+    	(date_format(EndTime, '%m%d') >= #{startTime} and date_format(EndTime, '%m%d') <= #{endTime})
+		]]>
+    </select>
+    
+    
+    <select id="strongCoolingStationByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime, 
+    	TIMESTAMPDIFF(DAY,StartTime, EndTime) as PersistDays, CoolTmp, Cool72HTmp, level, Station_Id_C
+    	 from t_strongcoolingstation where
+		 (starttime <= #{startTime} and  endTime >= #{startTime}) 
+		or (starttime <= #{endTime} and  endTime >= #{endTime})
+		or (starttime >= #{startTime} and  endTime <= #{endTime})
+		or (starttime <= #{startTime} and  endTime >= #{endTime})
+		order by starttime
+		]]>
+    </select>
+    
+     <select id="strongCoolingStationByYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime, 
+    	TIMESTAMPDIFF(DAY,StartTime, EndTime) as PersistDays, CoolTmp, Cool72HTmp, level, Station_Id_C
+    	 from t_strongcoolingstation where
+		 (date_format(StartTime, '%m%d') <= #{startTime} and  date_format(endTime, '%m%d') >= #{startTime}) 
+		or (date_format(StartTime, '%m%d') <= #{endTime} and  date_format(endTime, '%m%d') >= #{endTime})
+		or (date_format(StartTime, '%m%d') >= #{startTime} and  date_format(endTime, '%m%d') <= #{endTime})
+		or (date_format(StartTime, '%m%d') <= #{startTime} and  date_format(endTime, '%m%d') >= #{endTime})
+		order by starttime
+		]]>
+    </select>
+    
+    <select id="strongCoolingAreaByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime, 
+    	TIMESTAMPDIFF(DAY,StartTime, EndTime) as PersistDays, StationCnt, MaxTmp, MinTmp, AvgTmp
+    	 from t_strongcoolingarea where
+		 (starttime <= #{startTime} and  endTime >= #{startTime}) 
+		or (starttime <= #{endTime} and  endTime >= #{endTime})
+		or (starttime >= #{startTime} and  endTime <= #{endTime})
+		or (starttime <= #{startTime} and  endTime >= #{endTime})
+		order by starttime
+		]]>
+    </select>
+    
+    <select id="strongCoolingAreaByYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime, 
+    	TIMESTAMPDIFF(DAY,StartTime, EndTime) as PersistDays, StationCnt, MaxTmp, MinTmp, AvgTmp
+    	 from t_strongcoolingarea where
+		 (date_format(StartTime, '%m%d') <= #{startTime} and  date_format(endTime, '%m%d') >= #{startTime}) 
+		or (date_format(StartTime, '%m%d') <= #{endTime} and  date_format(endTime, '%m%d') >= #{endTime})
+		or (date_format(StartTime, '%m%d') >= #{startTime} and  date_format(endTime, '%m%d') <= #{endTime})
+		or (date_format(StartTime, '%m%d') <= #{startTime} and  date_format(endTime, '%m%d') >= #{endTime})
+		order by starttime
+		]]>
+    </select>
+    
+    
+    <select id="lowTmpStationByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime, 
+    	TIMESTAMPDIFF(DAY,StartTime, EndTime) + 1 as PersistDays, PersistHous, Station_Id_C, AvgTmp, Anomaly
+    	 from t_lowtmpstation where
+		 (starttime <= #{startTime} and  endTime >= #{startTime}) 
+		or (starttime <= #{endTime} and  endTime >= #{endTime})
+		or (starttime >= #{startTime} and  endTime <= #{endTime})
+		or (starttime <= #{startTime} and  endTime >= #{endTime})
+		order by starttime
+		]]>
+    </select>
+    
+    <select id="lowTmpAreaByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    	select date_format(StartTime, '%Y-%m-%d')as StartTime, date_format(EndTime, '%Y-%m-%d')as EndTime, 
+    	TIMESTAMPDIFF(DAY,StartTime, EndTime) + 1 as PersistDays, SumStations, SumAnomaly
+    	 from t_lowtmparea where
+		 (starttime <= #{startTime} and  endTime >= #{startTime}) 
+		or (starttime <= #{endTime} and  endTime >= #{endTime})
+		or (starttime >= #{startTime} and  endTime <= #{endTime})
+		or (starttime <= #{startTime} and  endTime >= #{endTime})
+		order by starttime
+		]]>
+    </select>
+    
+    <select id="mciStationBySingleStrength" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    		select SingleSynthStrength from t_mcistation where SingleSynthStrength is not null order by SingleSynthStrength 
+		]]>
+    </select>
+    
+    <select id="querySumMCI" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    	<![CDATA[
+    		select sumStrength, SingleStrength, SingleStrength - days / 200 as SingleSynthStrength from ( 
+			select sum(mci) as sumStrength, sum(mci) / (TIMESTAMPDIFF(DAY, #{startTime}, #{endTime}) + 1) as SingleStrength , 
+			(TIMESTAMPDIFF(DAY,#{startTime}, #{endTime}) + 1) as days 
+			from t_mci where datetime >=#{startTime} and datetime <= #{endTime} and station_id_C = #{station_Id_C}) a
+		]]>
+    </select>
+    
+</mapper> 

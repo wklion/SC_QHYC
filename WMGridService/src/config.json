@@ -1,0 +1,13 @@
+{
+	"monthHgtFile":"E:/SC/Data/Height/hgt.mon.mean.nc",
+	"osrFile":"F:/test/JavaUseDll/DllForJava/csdll/bin/csdll.exe",
+	"hgtMonthAvgPath":"E:/SC/Data/Mode/HeightAvg/month/500/",
+	"hgtMonthJPPath":"E:/SC/Data/Mode/HgtMonthJP/month/500/",
+	"derfHgtMonthPath":"D:/SPD/data/Model/Height/day/",
+	"stationFile":"D:/SPD/tomcatv7_QHYC/webapps/WMGridService/WEB-INF/data/station.json",
+	"factorPath":"E:/SC/Factor/",
+	"modeJPPath":"E:/SC/Data/Mode/TempJP/",
+	"modeHgtPath":"E:/SC/Data/Height/month/",
+	hosMonthTempAvgPath:"E:/SC/Data/Mode/Hos/tempAvg/month/",
+	hosMonthPrecAvgPath:"E:/SC/Data/Mode/Hos/precAvg/month/"
+ }

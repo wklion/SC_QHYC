@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IWinAvgCloCovMapper"> 
+    
+    <select id="queryWinAvg2MinByTimeRange" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		<![CDATA[
+	    	select a.Station_Id_C, date_format(a.datetime, '%Y-%m-%d') as datetime, 
+			a.Hours, a.WIN_D_Avg_2mi, a.WIN_S_Avg_2mi from t_winavg2minhour a 
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+		]]>
+		<if test="StationType == 'AWS'">
+			and Station_Id_C like '5%'
+		</if>
+    </select>
+    
+    <select id="queryCloCovByTimeRange" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		<![CDATA[
+	    	select a.Station_Id_C, date_format(a.datetime, '%Y-%m-%d') as datetime, 
+			a.Hours, a.CLO_Cov, a.CLO_Cov_Low from t_clocovhour a 
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+		]]>
+		<if test="StationType == 'AWS'">
+			and Station_Id_C like '5%'
+		</if>
+    </select>
+     
+</mapper> 

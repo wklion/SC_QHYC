@@ -1,0 +1,21 @@
+.disabled{
+
+    background-color: #C5CBD0;
+    border-color: #C5CBD0;
+
+
+}
+
+
+.box {
+    width: 355px;
+    height: 500px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+.list {
+    position: absolute;
+}

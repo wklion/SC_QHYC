@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.ICommonMapper"> 
+    <!-- 这里的id必须和IStatisticsMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+    <select id="getStationsByLevel" resultType="com.spd.common.Station"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, Lon, Lat, Alti, ZoomLevel, Province,
+    	Country, AreaCode 
+    	from t_station where ZoomLevel = #{ZoomLevel}
+    	order by seq
+		]]>
+    </select>
+    
+    <!-- 不过滤站点 -->
+    <select id="queryData" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, Lon, Lat, year, ${items}
+    	from ${tableName} where year >= ${startYear} and year <= ${endYear}
+		]]>
+    </select>
+    
+    <!--  过滤站点 -->
+    <select id="queryDataByStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, Lon, Lat, year, ${items}
+    	from ${tableName} where year >= ${startYear} and year <= ${endYear} and Station_Id_C like #{Station_Id_C}
+		]]>
+    </select>
+    
+    <!-- 按in的方式过滤站点 -->
+    <select id="queryDataByStationsSets" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, Lon, Lat, year, ${items}
+    	from ${tableName} where year >= ${startYear} and year <= ${endYear} and Station_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+    </select>
+    
+    <select id="getAllNationCityStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C, Station_Name, Type from t_NationCity_Station 
+	    ]]> 
+	</select>
+	
+	<select id="getAllStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select * from t_station
+	    ]]> 
+	</select>
+	
+	<select id="queryByStation_Id_C" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select * from t_station where Station_Id_C = #{Station_Id_C}
+	    ]]> 
+	</select>
+	<select id="queryContrastByStation_Id_C" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select * from t_ContrastStation where ContrastStation_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+	</select>
+	
+	<select id="getAllContrastStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select * from t_contraststation
+	    ]]> 
+	</select>
+	<select id="queryStation_Id_CByCountry" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C from t_station where country = #{country}
+	    ]]> 
+	</select>
+	
+	<select id="queryStation_Id_CByAreaCode" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C from t_station
+	    ]]> 
+	    <if test="areaCode != null">
+	  	  where areaCode = #{areaCode}
+	    </if>
+	    order by station_id_C
+	</select>
+	
+	<select id="queryAuthorityByUserName" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select * from t_user_authority where UserName = #{UserName}
+	    ]]> 
+	</select>
+	
+	<select id="getStationsByUser" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select a.Station_Id_C, a.Station_Name, a.Country from t_station a left join t_user b
+			on a.areaCode = b.areaCode
+			where b.username = #{UserName}
+	    ]]> 
+	</select>
+	
+	<select id="getAWSStationsOrderByIdC" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C, Station_Name from t_station where Station_Id_C like '5%' and seq is not null order by Station_Id_C
+	    ]]> 
+	</select>
+	
+	<select id="getAWSStationsOrderBySeq" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C, Station_Name from t_station where Station_Id_C like '5%' and seq is not null order by seq
+	    ]]> 
+	</select>
+	
+	<select id="queryClimByTime" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	${query}
+	    ]]> 
+	</select>
+	
+	<select id="getAllStationsByNationStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select station_id_C from t_station where areaCode in (
+				select areaCode from t_station where station_Id_C in (${station_id_Cs})
+			) 
+	    ]]> 
+	</select>
+	
+	<select id="query" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	${query}
+	    ]]> 
+	</select>
+	
+	<select id="queryPenDiStations" resultType="com.spd.sc.pojo.Station"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C, Station_Name, Lon, Lat, AreaCode
+	    	from t_station where substring(areacode, 1, 4) not in ('5104', '5132', '5133', '5134') and province = '四川省'
+	    ]]> 
+	</select>
+	
+</mapper> 

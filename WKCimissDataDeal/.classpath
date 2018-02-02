@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/druid-1.0.28.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.30.jar"/>
+	<classpathentry kind="lib" path="lib/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-api-2.8.jar"/>
+	<classpathentry kind="lib" path="lib/log4j-core-2.8.jar"/>
+	<classpathentry kind="lib" path="lib/CimissDayOfPrec.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/WMCommon.iml" filepath="$PROJECT_DIR$/WMCommon.iml" />
+      <module fileurl="file://E:/GX/GDYB/Code/trunk/Server/WMGridService/WMGridService.iml" filepath="E:/GX/GDYB/Code/trunk/Server/WMGridService/WMGridService.iml" />
+      <module fileurl="file://E:/GX/GDYB/Code/trunk/Server/WMUser/WMUser.iml" filepath="E:/GX/GDYB/Code/trunk/Server/WMUser/WMUser.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,82 @@
+//高度场距平
+var heatMap_HeighJPStyles = [
+    {start:-1000,end:-80,caption:"<-80",startColor:{red:60,green:151,blue:245},endColor:{red:0,green:85,blue:255}},
+    {start:-80,end:-60,caption:"-80~-60",startColor:{red:80,green:165,blue:245},endColor:{red:80,green:165,blue:245}},
+    {start:-60,end:-40,caption:"-60~-40",startColor:{red:120,green:185,blue:251},endColor:{red:120,green:185,blue:251}},
+    {start:-40,end:-20,caption:"-40~-20",startColor:{red:151,green:211,blue:251},endColor:{red:0,green:255,blue:170}},
+    {start:-20,end:-10,caption:"-20~-10",startColor:{red:181,green:241,blue:251},endColor:{red:181,green:241,blue:251}},
+    {start:-10,end:-5,caption:"-10~-5",startColor:{red:225,green:255,blue:255},endColor:{red:225,green:255,blue:255}},
+    {start:-5,end:5,caption:"-5~5",startColor:{red:255,green:255,blue:255},endColor:{red:255,green:255,blue:255}},
+    {start:5,end:10,caption:"5~10",startColor:{red:255,green:251,blue:171},endColor:{red:255,green:251,blue:171}},
+    {start:10,end:20,caption:"10~20",startColor:{red:255,green:233,blue:120},endColor:{red:255,green:233,blue:120}},
+    {start:20,end:40,caption:"20~40",startColor:{red:255,green:193,blue:60},endColor:{red:255,green:193,blue:60}},
+    {start:40,end:60,caption:"40~60",startColor:{red:255,green:161,blue:0},endColor:{red:255,green:161,blue:0}},
+    {start:60,end:80,caption:"60~80",startColor:{red:255,green:96,blue:0},endColor:{red:255,green:96,blue:0}},
+    {start:80,end:1000,caption:">80",startColor:{red:255,green:50,blue:0},endColor:{red:255,green:50,blue:0}}
+].reverse();
+//降水距平百分率11
+var month_jp_rain = [
+    {start:-100.0,end:-80.0,caption:"-100~-80",startColor:{red:255,green:0,blue:0},endColor:{red:255,green:0,blue:0}},
+    {start:-80.0,end:-50.0,caption:"-80~-50",startColor:{red:255,green:99,blue:100},endColor:{red:255,green:99,blue:100}},
+    {start:-50.0,end:-20.0,caption:"-50~-20",startColor:{red:255,green:149,blue:99},endColor:{red:255,green:149,blue:99}},
+    {start:-20.0,end:0.0,caption:"-20~0",startColor:{red:255,green:255,blue:151},endColor:{red:255,green:255,blue:151}},
+    {start:0.0,end:20.0,caption:"0~20",startColor:{red:200,green:255,blue:200},endColor:{red:200,green:255,blue:200}},
+    {start:20.0,end:50.0,caption:"20~50",startColor:{red:50,green:200,blue:50},endColor:{red:50,green:200,blue:50}},
+    {start:50.0,end:100.0,caption:"50~100",startColor:{red:0,green:255,blue:255},endColor:{red:0,green:255,blue:255}},
+    {start:100.0,end:200.0,caption:"100~200",startColor:{red:1,green:150,blue:255},endColor:{red:1,green:150,blue:255}},
+    {start:200.0,end:9999.0,caption:">200",startColor:{red:0,green:0,blue:255},endColor:{red:0,green:0,blue:255}},
+].reverse();
+//气温距平
+var temp_jp = [
+    {start:-10,end:-4,caption:"<-4",startColor:{red:54,green:97,blue:254},endColor:{red:54,green:97,blue:254}},
+    {start:-4,end:-2,caption:"-4~-2",startColor:{red:56,green:172,blue:255},endColor:{red:56,green:172,blue:255}},
+    {start:-2,end:-1,caption:"-2~-1",startColor:{red:0,green:255,blue:255},endColor:{red:0,green:255,blue:255}},
+    {start:-1,end:-0,caption:"-1~0",startColor:{red:145,green:255,blue:180},endColor:{red:145,green:255,blue:180}},
+    {start:0,end:1,caption:"0~1",startColor:{red:210,green:254,blue:105},endColor:{red:210,green:254,blue:105}},
+    {start:1,end:2,caption:"1~2",startColor:{red:255,green:255,blue:0},endColor:{red:255,green:255,blue:0}},
+    {start:2,end:4,caption:"2~4",startColor:{red:255,green:183,blue:0},endColor:{red:255,green:183,blue:0}},
+    {start:4,end:100,caption:">4",startColor:{red:255,green:111,blue:0},endColor:{red:255,green:111,blue:0}},
+].reverse();
+var temp_jp_month=[
+    {start:6,end:100,caption:">6",startColor:{red:150,green:0,blue:0},endColor:{red:150,green:0,blue:0}},  
+    {start:4,end:6,caption:"4~6",startColor:{red:255,green:0,blue:0},endColor:{red:255,green:0,blue:0}},
+    {start:2,end:4,caption:"2~4",startColor:{red:255,green:100,blue:100},endColor:{red:255,green:100,blue:100}},
+    {start:1,end:2,caption:"1~2",startColor:{red:250,green:150,blue:100},endColor:{red:250,green:150,blue:100}},
+    {start:0.5,end:1,caption:"0.5~1",startColor:{red:255,green:255,blue:50},endColor:{red:255,green:255,blue:50}},
+    {start:0,end:0.5,caption:"0~0.5",startColor:{red:255,green:255,blue:150},endColor:{red:255,green:255,blue:150}},
+    {start:-0.5,end:0,caption:"-0.5~0",startColor:{red:200,green:255,blue:255},endColor:{red:200,green:255,blue:255}},
+    {start:-1,end:-0.5,caption:"-1~-0.5",startColor:{red:0,green:255,blue:255},endColor:{red:0,green:255,blue:255}},
+    {start:-2,end:-1,caption:"-2~-1",startColor:{red:0,green:150,blue:255},endColor:{red:0,green:150,blue:255}},
+    {start:-4,end:-2,caption:"-4~-2",startColor:{red:0,green:0,blue:255},endColor:{red:0,green:0,blue:255}},
+    {start:-100,end:-4,caption:"<-4",startColor:{red:0,green:0,blue:50},endColor:{red:0,green:0,blue:50}},
+];
+//月降水
+var month_prec = [
+    {start:1,end:10,caption:"1~10",startColor:{red:207,green:255,blue:207},endColor:{red:207,green:255,blue:207}},
+    {start:10,end:25,caption:"10~25",startColor:{red:0,green:255,blue:0},endColor:{red:0,green:255,blue:0}},
+    {start:25,end:50,caption:"20~50",startColor:{red:51,green:204,blue:50},endColor:{red:51,green:204,blue:50}},
+    {start:50,end:100,caption:"50~100",startColor:{red:0,green:153,blue:153},endColor:{red:0,green:153,blue:153}},
+    {start:100,end:200,caption:"100~200",startColor:{red:0,green:130,blue:0},endColor:{red:0,green:130,blue:0}},
+    {start:200,end:400,caption:"200~400",startColor:{red:1,green:150,blue:255},endColor:{red:1,green:150,blue:255}},
+    {start:400,end:800,caption:"400~800",startColor:{red:0,green:0,blue:255},endColor:{red:0,green:0,blue:255}},
+    {start:800,end:2000,caption:">800",startColor:{red:255,green:0,blue:255},endColor:{red:255,green:0,blue:255}}
+].reverse();
+var temp = [
+    {start:-20,end:-16,caption:"-20~-16",startColor:{red:59,green:126,blue:219},endColor:{red:0,green:200,blue:255}},
+    {start:-16,end:-12,caption:"-16~-12",startColor:{red:97,green:150,blue:224},endColor:{red:0,green:255,blue:247}},
+    {start:-12,end:-8,caption:"-12~-8",startColor:{red:135,green:175,blue:229},endColor:{red:0,green:255,blue:179}},
+    {start:-8,end:-4,caption:"-8~-4",startColor:{red:154,green:196,blue:220},endColor:{red:0,green:255,blue:115}},
+    {start:-4,end:0,caption:"-4~0",startColor:{red:152,green:214,blue:196},endColor:{red:0,green:255,blue:47}},
+    {start:0,end:4,caption:"0~4",startColor:{red:215,green:222,blue:126},endColor:{red:17,green:255,blue:0}},
+    {start:4,end:8,caption:"4~8",startColor:{red:244,green:217,blue:99},endColor:{red:85,green:255,blue:0}},
+    {start:8,end:12,caption:"8~12",startColor:{red:247,green:180,blue:45},endColor:{red:149,green:255,blue:0}},
+    {start:12,end:16,caption:"12~16",startColor:{red:241,green:147,blue:3},endColor:{red:217,green:255,blue:0}},
+    {start:16,end:20,caption:"16~20",startColor:{red:239,green:117,blue:17},endColor:{red:255,green:229,blue:0}},
+    {start:20,end:24,caption:"20~24",startColor:{red:238,green:88,blue:31},endColor:{red:255,green:162,blue:0}},
+    {start:24,end:28,caption:"24~28",startColor:{red:224,green:63,blue:22},endColor:{red:255,green:98,blue:0}},
+    {start:28,end:32,caption:"28~32",startColor:{red:208,green:36,blue:14},endColor:{red:255,green:45,blue:0}},
+    {start:32,end:34,caption:"32~34",startColor:{red:181,green:1,blue:9},endColor:{red:255,green:20,blue:0}},
+    {start:34,end:36,caption:"34~36",startColor:{red:169,green:2,blue:16},endColor:{red:255,green:0,blue:0}},
+    {start:36,end:38,caption:"36~38",startColor:{red:138,green:5,blue:25},endColor:{red:255,green:0,blue:0}},
+    {start:38,end:45,caption:"38~45",startColor:{red:111,green:0,blue:21},endColor:{red:255,green:0,blue:0}}
+]

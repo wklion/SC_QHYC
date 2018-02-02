@@ -1,0 +1,1 @@
+java -cp .;GridSyncService.jar com.spd.grid.GridSync

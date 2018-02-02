@@ -1,0 +1,1 @@
+java -cp .;GridInitialize.jar com.spd.grid.GridInitialize

@@ -1,0 +1,1 @@
+java -cp .;GridSyncService.jar com.spd.grid.GridSync EC 2T 1000 F:\Work\SPD\Micaps_Data\Ecmwf_thin\2T\999

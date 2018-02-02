@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/quartz-1.8.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xmlbeans-2.6.0.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/MGObjectsJava.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/component/MGObjectsJava_64_x64_win_v1.0.0.35"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/hibernate3.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jodconverter-core-3.0-beta-4.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsr311-api-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jta-1.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/juh-3.2.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jurt-3.2.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/cglib-2.2.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/classes12.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/fax4j.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/htmlparser.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/ImApi.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/inieditor.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/iText-2.1.7.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/iText-rtf-2.1.7.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/iTextAsian.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jacob.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/javassist-3.9.0.GA.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jaxen-1.1-beta-9.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jcifs-1.3.17.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/xml-apis.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mail.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/mariadb-java-client-1.1.6.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-3.9.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-ooxml-3.7.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-ooxml-schemas-3.9.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/poi-scratchpad-3.7.jar"/>
+	<classpathentry kind="lib" path="lib/opencv-310.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/opencv3.1/opencv/build/java/x64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/CCA.jar"/>
+	<classpathentry kind="lib" path="lib/javabuilder.jar"/>
+	<classpathentry kind="lib" path="lib/EOFCCA.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="D:/opencv3.1/opencv/build/java/x64"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
+		<attributes>
+			<attribute name="maven.pomderived" value="true"/>
+			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/WMCommon"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

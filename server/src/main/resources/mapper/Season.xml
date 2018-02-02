@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.ISeasonMapper"> 
+    <!-- 这里的id必须和IStatisticsMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+    <select id="querySpringSeason" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, year, ${items} 
+    	from t_tem_avg where year >= #{startYear} and year <= #{endYear} and Station_Id_C like '57348'
+		]]>
+    </select>
+    
+    <select id="querySummerSeason" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, year, ${items}
+    	from t_tem_avg where year >= #{startYear} and year <= #{endYear} and Station_Id_C like '5%'
+		]]>
+    </select>
+    
+    <select id="queryAutumnSeason" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, year, ${items}
+    	from t_tem_avg where year >= #{startYear} and year <= #{endYear} and Station_Id_C like '5%'
+		]]>
+    </select>
+    
+    <select id="queryWinderSeason" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, year, ${items}
+    	from t_tem_avg where year >= #{startYear} and year <= #{endYear} and Station_Id_C like '5%'
+		]]>
+    </select>
+    
+    <select id="queryHistorySeason" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, SpringStart, SummerStart, AutumnStart, WinterStart
+    	from t_season
+		]]>
+    </select>
+    
+    <select id="pendiMaxPreSeason" resultType="com.spd.sc.pojo.PenDiMaxPreResult"  parameterType="map"> 
+    <![CDATA[
+    	select min(Datetime) as datetime, Station_Id_C, Station_Name from t_rainstorm2020 where Datetime >= #{startTime} and datetime <= #{endTime}
+		and Pre >= #{minPre} and Station_Id_C in (${stations}) 
+		group by Station_id_C, Station_Name
+		]]>
+    </select>
+    
+    <select id="pendiYearsMaxPreSeason" resultType="com.spd.sc.pojo.PenDiMaxPreSeasonYearsResult"  parameterType="map"> 
+	    <![CDATA[
+	    	select a.station_Id_C, b.station_Name, a.StartTime, a.EndTime, a.PersistDays, a.year from t_rainyseason2 a left join t_station b on a.Station_Id_C = b.Station_Id_C
+			where  a.station_Id_C = #{station_Id_C} 
+			and year >= #{startYear} and year <= #{endYear}
+			order by year 
+		]]>
+    </select>
+    
+    <select id="southWestRainySeason" resultType="com.spd.sc.pojo.RainySeasonResult"  parameterType="map"> 
+  	  <![CDATA[
+    	select a.Station_Id_C, b.Station_Name, b.Lon as lon, b.Lat as lat, b.Province, b.City,
+		date_format(a.StartTime, '%Y-%m-%d') as StartTime, date_format(a.EndTime, '%Y-%m-%d') as EndTime,
+		a.PersistDays, a.year, a.PreSum
+		 from t_rainyseason a left join t_station b on a.Station_Id_C = b.Station_Id_C	
+		 where a.year = #{year}
+		]]>
+    </select>
+</mapper> 

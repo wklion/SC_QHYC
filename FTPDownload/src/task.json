@@ -1,0 +1,4 @@
+[
+	{id:"height",name:"高度场(日)",parantDic:"ftp://10.1.64.168/SeasonalClimateModel/products/data/atm.2mon_Z3_T_U_V_Q.prs1000_0925_0850_0700_0600_0500_0400_0300_0250_0200_0150_0100_0050_0030_0020_0010.nc/",format:"date1/date1.atm.Z3.date1-date2_prs0500_member.nc",timeSpace:2,timeFormat:"yyyyMMdd",outputDic:"E:/SC/Data/Height/day/"},
+	{id:"prec",name:"降水(日)",parantDic:"ftp://10.1.64.168/SeasonalClimateModel/products/data/atm.PREC_TREFHT_PSL_FLUT.sfc.nc/",format:"date1/date1.atm.PREC.date1-date2_sfc_member.nc",timeSpace:2,timeFormat:"yyyyMMdd",outputDic:"E:/SC/Data/Prec/day/"}
+]

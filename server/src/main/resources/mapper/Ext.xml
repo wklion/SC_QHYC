@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IExtStatisticsMapper"> 
+    <!-- 这里的id必须和IStatisticsMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+    <select id="statisticsRangTime" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select id, Station_Name, Province, City, Cnty, Station_Id_C, Station_Id_d,
+    	Lat, Lon, Alti, year,
+    	${items} from ${tableName} where (year >= #{startYear} and year <= #{endYear})
+		]]>
+		 <if test="stations != null">
+		  and Station_Id_C like #{stations}
+		 </if>
+    </select>
+    <!-- 跨年 -->
+    <select id="statisticsHisRangTime" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select id, Station_Name, Province, City, Cnty, Station_Id_C, Station_Id_d,
+    	Lat, Lon, Alti, year,
+    	${items} from ${tableName}
+		]]>
+		 <if test="stations != null">
+		where Station_Id_C like #{stations}
+		</if>
+    </select>
+    
+</mapper> 

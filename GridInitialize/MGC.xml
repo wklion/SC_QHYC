@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="gb2312"?>
+<!--MeteoGIS Core Setting-->
+<MGC>
+  <Fonts>
+    <Font Name="宋体" FileName="./Fonts/simsun.ttc"/>
+    <Font Name="微软雅黑" FileName="C:\Windows\Fonts\msyh.ttf"/>
+  </Fonts>
+  <Accessor CentralMeridian="110"/>
+  <Graphics Type="Agg" DpiX="96" DpiY="96"/>
+  <Plugins>
+    <Plugin FileName="MGGeometryBase.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorMemory.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorGDAL.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorMicaps.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorRadarBase.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorRadarProduct.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorSWAN.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorAWX.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorGPF.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorGrADS.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorMySQL.mgp" Enable="true"/>
+    <Plugin FileName="MGAccessorGRIB.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystBase.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystTopology.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystInterpolator.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystContour.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystVectorField.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystOverlay.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystBuffer.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystProximity.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystRasterBase.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystVolume.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystStatistics.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystNeighborhood.mgp" Enable="true"/>
+    <Plugin FileName="MGAnalystAirSounding.mgp" Enable="true"/>
+    <Plugin FileName="MGGraphicsAgg.mgp" Enable="true"/>
+    <Plugin FileName="MGLayerBase.mgp" Enable="true"/>
+    <Plugin FileName="MGLayerTiledCached.mgp" Enable="true"/>
+    <Plugin FileName="MGToolBase.mgp" Enable="true"/>
+    <Plugin FileName="MGToolContour.mgp" Enable="true"/>
+    <Plugin FileName="MGNodeBase.mgp" Enable="false"/>
+    <Plugin FileName="MGToolBase3D.mgp" Enable="false"/>
+    <Plugin FileName="MGTerrainBase.mgp" Enable="false"/>
+    <Plugin FileName="MGNodeTiledCached.mgp" Enable="false"/>
+    <Plugin FileName="MGNodeParticleSystem.mgp" Enable="false"/>
+    <Plugin FileName="MGNodeVolume.mgp" Enable="false"/>
+  </Plugins>
+</MGC>

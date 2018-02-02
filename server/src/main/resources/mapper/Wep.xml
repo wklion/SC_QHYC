@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IWepMapper"> 
+    
+    <select id="queryByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+		${sql}
+	]]>
+    </select>
+   
+    <select id="queryAllByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+   		<![CDATA[
+	    	select a.Station_Id_C, b.Station_Name, date_format(a.datetime, '%Y-%m-%d') as datetime, 
+			a.WEP_Record from t_wep a left join t_station b 
+			on a.Station_Id_C = b.Station_Id_C
+			where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+			and a.Station_Id_C in 
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_Cs" open="(" separator="," close=")">  
+	           #{item}  
+		</foreach>
+    </select>
+     
+</mapper> 

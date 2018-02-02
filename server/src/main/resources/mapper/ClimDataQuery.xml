@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IClimDataQueryMapper"> 
+    <!-- 这里的id必须和IStatisticsMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+    <select id="queryClimByTimesRangeAndElement" resultType="java.util.HashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, a.year, b.Station_Name 
+    	${items} from ${tableName} a left join t_station b
+    	on a.Station_Id_C = b.Station_Id_C
+    	where  a.year >= #{startYear} and a.year <= #{endYear} and a.Station_Id_C like '5%'
+    	order by ${col}
+		]]>
+    </select>
+</mapper> 

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title>登录</title>
+    <meta charset="utf-8">
+    <meta HTTP-EQUIV="pragma" CONTENT="no-cache"> 
+    <meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate"> 
+    <meta HTTP-EQUIV="expires" CONTENT="0">
+    <link rel="stylesheet" href="css/login.css" type="text/css" media="screen"/>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script type="text/javascript" src="js/config/config.js"></script>
+    <script type="text/javascript">
+        var m_user = null;
+
+        $(function(){
+            $(".loginButton").hover(function(){
+                $(this).css("background-color","rgb(3,127,223)");
+            },function(){
+                $(this).css("background-color","");
+            });
+//            $(".loginButton").click(function(){
+//			    window.location.href="nativ.html";
+//			});
+            $("#img_areaselector").click(function(){
+                function showDepart() {
+                    $("#departSelector").css("display", "block");
+                }
+                setTimeout(showDepart,100);
+            });
+            $("#departSelector").find("span").click(function(){
+                $("#departSelector").css("display", "none");
+                if(this.id == "")
+                    alert("暂无此用户");
+                else {
+                    $("#inputUserName").val(this.id);
+                    $("#inputPassword").val("");
+                }
+            });
+            $("#divBackground").click(function(){
+                $("#departSelector").css("display", "none");
+            });
+
+            $("#btn_login").click(function(){
+                login();
+            });
+
+            $("#btn_cancel").click(function(){
+                var userAgent = navigator.userAgent;
+                if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Presto") != -1) {
+                    window.location.replace("about:blank");
+                } else {
+                    window.opener = null;
+                    window.open("", "_self");
+                    window.close();
+                }
+            });
+
+            initLogin();
+            function initLogin(){
+                $("#inputUserName").val($.cookie("userName"));
+                if ($.cookie("rmbUser") == "true") {
+                    $("#ck_rmbUser").attr("checked", true);
+                    $("#inputPassword").val($.cookie("password"));
+                    //login();
+                }
+            }
+
+
+            function login(){
+                var userName = $("#inputUserName").val();
+                var password = $("#inputPassword").val();
+                if(userName == "" && password == ""){
+                    $("#tipShow").css("display", "inline-block");
+                    $("#tipShow").html("用户名和密码不能为空");
+                    return;
+                }
+                else if(userName == ""){
+                    $("#tipShow").css("display", "inline-block");
+                    $("#tipShow").html("用户名不能为空");
+                    return;
+                }
+                else if(password == ""){
+                    $("#tipShow").css("display", "inline-block");
+                    $("#tipShow").html("密码不能为空");
+                    return;
+                }
+
+                m_user = null;
+                $.cookie('userName', '', { expires: -1 });
+                $.cookie('showName', '', { expires: -1 });
+                $.cookie('password', '', { expires: -1 });
+                $.cookie("rmbUser", 'false', { expire: -1 });
+
+                var param = '{"userName":'+userName+',"password":'+password+'}';
+                $.ajax({
+                    type: 'post',
+                    url: Url_Config.userServiceUrl + "services/UserService/login",
+                    data: {'para': param},
+                    dataType: 'text',
+                    error: function () {
+                        alert('登录出错!');
+                    },
+                    success: function (data) {
+                        if(data == "[]"){
+                            $("#tipShow").css("display", "inline-block");
+                            $("#tipShow").html("用户名或密码错误");
+                        }
+                        else{
+                            var user = jQuery.parseJSON(data);
+                            m_user = user[0];
+                            if ($("#ck_rmbUser")[0].checked) {
+                                $.cookie("rmbUser", "true", { expires: 60 }); //存储一个带60天期限的cookie
+                            }
+                            else {
+                                $.cookie("rmbUser", "false", { expire: -1 });
+                            }
+                            $.cookie("userName", m_user.userName, { expires: 60 });
+                            $.cookie("showName", m_user.showName, { expires: 60 });
+                            $.cookie("password", password, { expires: 60 });
+                            window.location.href="nativ.html";
+                        }
+                    }
+                });
+            }
+
+        });
+    </script>
+</head>
+<body style="height: 100%;margin: 0px;overflow: hidden;font-family: Microsoft YaHei;">
+    <div class="loginBackground">
+        <img src="imgs/login/bodyBackground.png" width="100%" height="100%" style="margin:0px;z-index: -1; background-color:#83c3ff;background-image: linear-gradient(to bottom, #83c3ff 0px, #007df1 100%);">
+    </div>
+    <div id="divBackground" class="loginBackground">
+        <img src="imgs/login/title.png" style="position: absolute;left: 50%;margin-left: -325px;top: 10%;">
+        <div id="divPanel" class="loginPanel">
+            <div style="width: 100%;height: 40px;margin-top: 36px;">
+                <div class="loginParam" >
+                    用户名：
+                </div>
+                <div>
+                    <input id="inputUserName" type="text" class="loginParamInput" value=""/>
+                    <img id='img_areaselector' title="选择地区" src="imgs/img_areaselector.png"/>
+                </div>
+            </div>
+            <div style="width: 100%;height: 40px;margin-top: 16px;">
+                <div class="loginParam" >
+                    密码：
+                </div>
+                <div>
+                    <input  id="inputPassword" type="password" class="loginParamInput" value=""/>
+                </div>
+            </div>
+            <div style="margin-top: 10px;padding-top: 6px;height: 20px;padding-left: 100px;">
+                <input id="ck_rmbUser" type="checkbox" style="margin-left: 32px;vertical-align: middle;">
+                <label style="vertical-align:middle;font-size: 12px;">保存密码</label>
+                <span id="tipShow" class="loginTip">用户名或密码错误</span>
+            </div>
+            <div style="margin-top: 20px;">
+                <div id="btn_login" class="loginButton" style="margin-left: 140px;cursor: pointer;">登  录</div>
+                <div id="btn_cancel" class="loginButton" style="margin-left: 30px;cursor: pointer;">取  消</div>
+            </div>
+        </div>
+        <div id="departSelector" class="divDepartSelector" style="display: none">
+            <div class="divDepartSelector_city"><span id="guangxi">市台</span></span></div>
+        </div>
+    </div>
+</body>
+</html>

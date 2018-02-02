@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IFogMapper"> 
+    
+    <select id="queryFogByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select a.Station_Id_C, a.Station_Name, a.Fog_OTime, b.area, date_format(a.datetime, '%Y-%m-%d') as datetime, 
+    	a.VIS_Min, a.RHU_Avg, a.RHU_Min, a.Fog, a.Mist from t_fog a
+    	left join t_station b on a.Station_Id_C = b.Station_Id_C
+		where a.datetime >= #{startTime} and a.datetime <= #{endTime}
+		]]>
+    </select>
+    
+    <select id="queryFogByRangesAndStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, date_format(datetime, '%Y-%m-%d') as datetime, VIS_Min, RHU_Avg, RHU_Min, Fog, Mist from t_fog
+		where datetime >= #{startTime} and datetime <= #{endTime}
+		and Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+    </select>
+    
+    
+    <select id="queryFogBySameYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C, date_format(datetime, '%Y-%m-%d') as datetime, VIS_Min, RHU_Avg, RHU_Min, Fog, Mist, year, date_format(datetime, '%m%d') as MMDD
+	    	from t_fog where (date_format(datetime, '%m%d') >= #{startTime} and date_format(datetime, '%m%d') <= #{endTime})
+	    	and year >= #{startYear} and year <= #{endYear}
+	    	and Station_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+    </select>
+    
+    <select id="queryFogByOverYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C, date_format(datetime, '%Y-%m-%d') as datetime, VIS_Min, RHU_Avg, RHU_Min, Fog, Mist, year, date_format(datetime, '%m%d') as MMDD
+	    	from t_fog where (date_format(datetime, '%m%d') >= #{startTime} or date_format(datetime, '%m%d') <= #{endTime})
+			and year >= #{startYear} and year <= #{endYear}
+			and Station_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+    </select>
+    
+</mapper> 

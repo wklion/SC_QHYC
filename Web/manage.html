@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>气候预测-配置</title>
+    <link rel="stylesheet" href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/qhyc.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/app/manage.js"></script>
+</head>
+<body>
+    <div id="manage-page">
+        <div class="top">
+            <div><img src="imgs/img_banner_titlie.png"/></div>
+        </div>
+        <div class="middle">
+            <div class="menu">
+                <ul class="list-group">
+                    <li id="userManage" class="list-group-item"><span class="glyphicon glyphicon-user"></span>用户管理</li>
+                    <li id="mapSet" class="list-group-item"><span class="glyphicon glyphicon-globe"></span>地图配置</li>
+                    <li id="other" class="list-group-item"><span class="glyphicon glyphicon-th-large"></span>其它</li>
+                </ul>
+            </div>
+            <div id="content" class="content"></div>
+        </div>
+        <div class="footer">Copyright (c) 2016 四川气候中心&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;技术支持：北京思湃德信息技术有限公司&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;QQ交流群：297435059</div>
+    </div>
+</body>
+<script>
+    var manage=new Manage();
+    $("#mapSet").on("click",manage.loadMapPage);
+</script>
+</html>

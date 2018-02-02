@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.grid.mapper.GridProductMapper"> 
+	<resultMap type="gridproduct" id="gridproduct"></resultMap>
+    <!-- 这里的id必须和UserMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+	<insert id="addGridProducts" parameterType="java.util.List"> 
+		insert into t_gridproduct(departCode, type, element, forecastTime, hourSpan, totalHourSpan, 
+		level, version, tabelName, nwpModel, nwpModelTime, userName, forecaster, issuer, makeTime, lastModifyTime, remark)
+		values 
+		<foreach collection="list" item="item" index="index" separator="," >
+			(#{item.departCode}, #{item.type}, #{item.element}, #{item.forecastTime}, #{item.hourSpan}, #{item.totalHourSpan}, #{item.level}, #{item.version},
+			#{item.tabelName}, #{item.nwpModel}, #{item.nwpModelTime}, #{item.userName}, #{item.forecaster}, #{item.issuer}, #{item.makeTime}, #{item.lastModifyTime}, #{item.remark})
+		</foreach>
+	</insert>
+	<delete id="deleteGridProducts" parameterType="java.util.List">
+		delete from t_gridproduct where 
+		<foreach collection="list" item="item" index="index" separator="or" >
+		departCode = #{item.departCode} and type = #{item.type} and element = #{item.element} and makeTime = #{item.makeTime} and forecastTime = #{item.forecastTime} and version = #{item.version} and hourSpan = #{item.hourSpan}
+		</foreach>
+	</delete>
+</mapper> 

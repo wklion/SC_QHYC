@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.IHouMapper"> 
+    <!-- 这里的id必须和IStatisticsMapper接口中的接口方法名相同，不然运行的时候也要报错 --> 
+    <select id="queryHouTmpData" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select avg(avgTmp) as avgTmp, month, hou, Station_Id_C, Station_Name, area from t_tem_avg_hou
+		where year >= #{startYear} and year <= #{endYear} and month in
+	]]>
+		<foreach item="item" index="index" collection="month" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+	<![CDATA[
+		and hou in
+	]]>
+		<foreach item="item" index="index" collection="hou" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+	 <![CDATA[	 
+		group by month, hou, station_Id_C, Station_Name, area
+	]]>
+    </select>
+    
+    <select id="queryHouTmpDataByYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select avg(avgTmp) as avgTmp, month, hou, Station_Id_C, Station_Name, area, year from t_tem_avg_hou
+		where year >= #{startYear} and year <= #{endYear} and month in
+	]]>
+		<foreach item="item" index="index" collection="month" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+	<![CDATA[
+		and hou in
+	]]>
+		<foreach item="item" index="index" collection="hou" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+	 <![CDATA[	 
+		group by month, hou, station_Id_C, Station_Name, area, year
+	]]>
+	<if test="station_Id_Cs != null">
+		having Station_Id_C in 
+		<foreach item="item" index="index" collection="station_Id_Cs" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+	</if>
+    </select>
+    
+    <select id="queryHouTmpDataByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select avg(avgTmp) as avgTmp, month, hou, Station_Id_C, Station_Name, area, year from t_tem_avg_hou
+		where ${claus}
+		group by year, month, hou, Station_Id_C, Station_Name, area
+		]]>
+    </select>
+    
+</mapper> 

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.spd.mapper.ISnowMapper"> 
+    
+    <select id="querySnowByTimes" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, date_format(datetime, '%Y-%m-%d') as datetime, GSS, Snow_Depth, Snow from t_snow
+		where datetime >= #{startTime} and datetime <= #{endTime}
+		]]>
+    </select>
+    
+    <select id="querySnowByRangesAndStations" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+    <![CDATA[
+    	select Station_Id_C, Station_Name, date_format(datetime, '%Y-%m-%d') as datetime, GSS, Snow_Depth, Snow from t_snow
+		where datetime >= #{startTime} and datetime <= #{endTime}
+		and Station_Id_C in
+		]]>
+		<foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+    </select>
+    
+    
+    <select id="querySnowBySameYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C, Station_Name, date_format(datetime, '%Y-%m-%d') as datetime, GSS, Snow_Depth, Snow, year, date_format(datetime, '%m%d') as MMDD
+	    	from t_snow where (date_format(datetime, '%m%d') >= #{startTime} and date_format(datetime, '%m%d') <= #{endTime})
+	    	and year >= #{startYear} and year <= #{endYear}
+	    	and Station_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach> 
+    </select>
+    
+    <select id="querySnowByOverYears" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+	    	select Station_Id_C, Station_Name, date_format(datetime, '%Y-%m-%d') as datetime, GSS, Snow_Depth, Snow, year
+	    	from t_snow where (date_format(datetime, '%m%d') >= #{startTime} or date_format(datetime, '%m%d') <= #{endTime})
+			and year >= #{startYear} and year <= #{endYear}
+			and Station_Id_C in
+    	]]> 
+    	 <foreach item="item" index="index" collection="Station_Id_C" open="(" separator="," close=")">  
+            #{item}  
+		 </foreach>  
+    </select>
+    <select id="snowArea" resultType="java.util.LinkedHashMap"  parameterType="map"> 
+	    <![CDATA[
+			select date_format(StartTime, '%Y-%m-%d') as StartTime, date_format(EndTime, '%Y-%m-%d') as EndTime,
+			datediff(EndTime, StartTime) + 1 as PersistDays, 
+			MaxStations, AvgDepth, MaxDepth, Strength from t_snowarea
+			where StartTime >= #{startTime} and EndTime <= #{endTime}
+    	]]> 
+    </select>
+    
+</mapper> 

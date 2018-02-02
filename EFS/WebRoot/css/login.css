@@ -1,0 +1,113 @@
+.loginPanel{
+    position: absolute;
+    width: 480px;
+    height: 230px;
+    top:50%;
+    left: 50%;
+    margin-left: -240px;
+    margin-top: -115px;
+	-webkit-box-shadow:2px 3px 4px #555;
+	-moz-box-shadow:2px 3px 4px #555;
+	box-shadow:2px 3px 4px #555;
+    background-color:rgba(255,255,255,0.5);
+}
+
+.loginBackground{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin:0px;top: 0px;
+}
+
+.loginButton{
+    float: left;
+    width: 110px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    font-size: 13px;
+    color: #ffffff;
+    background-color: rgb(71,167,255);
+}
+
+.loginParam{
+    float: left;
+    width: 118px;
+    height: 100%;
+    line-height: 40px;
+    text-align: right;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.loginParamInput{
+    width: 260px;
+    height: 34px;
+    margin: 1px 0px 0px 15px;
+    padding-left: 8px;
+    font-family: "微软雅黑";
+    border: 1px solid rgb(127,175,225)
+}
+
+.loginLink{
+    color: rgb(33,140,245);
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.loginLink:hover{
+    text-decoration:underline;
+}
+
+div.menuLink{
+    width: 100%;
+    height: 36px;
+    line-height: 32px;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    margin-top: 0px;
+    cursor: pointer;
+    font-weight: bold;
+	text-shadow:rgb(0,14,103) 1px 0 0,rgb(0,14,103) 0 1px 0,rgb(0,14,103) -1px 0 0,rgb(0,14,103) 0 -1px 0;
+}
+
+#img_areaselector{
+    margin-left: -30px;
+    cursor: pointer;
+}
+
+#img_areaselector:hover{
+}
+
+.divDepartSelector{
+    position: absolute;
+    background-color: #FFFFFF;
+    border: 1px solid #aaaaaa;
+    top:50%;
+    left: 50%;
+    margin-left: 160px;
+    margin-top: -280px;
+    width: 300px;
+    padding: 5px;
+}
+
+.divDepartSelector_city span{
+    font-size: 14px;
+    font-weight: bold;
+    color: #3d6dcc;
+    cursor: pointer;
+}
+
+.divDepartSelector_county span{
+    font-size: 12px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.loginTip{
+    color: red;
+    margin-left: 100px;
+    font-size: 12px;
+    display: none;
+}
